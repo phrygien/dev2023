@@ -672,7 +672,22 @@ class SidebarPanel
         ];
     }
 
+    public static function mecenes()
+    {
+        return [
+            'title' => 'Elements',
+            'items' => [
+                [
+                    'elements_avatar' => [
+                        'title' => 'Mecene',
+                        'route_name' => 'elements/avatar'
+                    ],
+            ]
+            ]
+        ];
+    }
+
     public static function all(){
-        return [self::dashboards(),self::apps(), self::layouts(), self::forms(), self::components(), self::elements()];
+        return [self::dashboards(),self::apps(), self::layouts(), self::forms(), self::components(), self::elements(), self::mecenes()];
     }
 }

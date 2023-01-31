@@ -159,4 +159,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboards/project-boards', [PagesController::class, 'dashboardsProjectBoards'])->name('dashboards/project-boards');
     Route::get('/dashboards/widget-ui', [PagesController::class, 'dashboardsWidgetUi'])->name('dashboards/widget-ui');
     Route::get('/dashboards/widget-contacts', [PagesController::class, 'dashboardsWidgetContacts'])->name('dashboards/widget-contacts');
+
+    Route::get('/mecenes/avatar', [PagesController::class, 'meceneAvatar'])->name('mecenes/avatar');
 });

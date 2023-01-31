@@ -646,4 +646,9 @@ class PagesController extends Controller
     {
         return view('pages/dashboards-widget-contacts');
     }
+
+    public function meceneAvatar()
+    {
+        return view('pages/mecenes-avatar');
+    }
 }
