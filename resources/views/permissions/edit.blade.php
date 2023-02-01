@@ -1,6 +1,6 @@
 <x-app-layout title="Création permission" is-sidebar-open="true" is-header-blur="true">
     <main class="main-content w-full px-[var(--margin-x)] pb-8">
-        {!! Form::open(array('route' => 'permissions/store','method'=>'POST')) !!}
+        {!! Form::model($permission, ['route' => ['permissions/update', $permission->id], 'method'=>'PATCH']) !!}
         <div class="flex flex-col items-center justify-between space-y-4 py-5 sm:flex-row sm:space-y-0 lg:py-6">
             <div class="flex items-center space-x-1">
                 <h2 class="text-xl font-medium text-slate-700 line-clamp-1 dark:text-navy-50">

@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('permissions/store', [PermissionController::class, 'store'])->name('permissions/store');
     Route::get('permissions/edit/{id}', [PermissionController::class, 'edit'])->name('permissions/edit');
     Route::patch('permissions/update/{id}', [PermissionController::class, 'update'])->name('permissions/update');
+    Route::delete('permissions/destroy/{id}', [PermissionController::class, 'destroy'])->name('permissions/destroy');
 });
 
 Route::middleware('auth')->group(function () {
