@@ -122,7 +122,7 @@
                         </tbody>
                       </table>
                       <div class="mt-2">
-                        {{ $data->links('pagination::tailwind') }}
+                        {{ $data->links('pagination::custom') }}
                       </div>
                 </div>
             </div>
