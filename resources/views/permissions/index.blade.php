@@ -148,7 +148,7 @@
                                     >
                                       <div class="mt-4 px-4 sm:px-12">
                                         <h3 class="text-lg text-slate-800 dark:text-navy-50">
-                                          {{ __('Suppression permission')}}
+                                          {{ __('Suppression permission')}} : {{ $permission->name }}
                                         </h3>
                                         <p class="mt-1 text-slate-500 dark:text-navy-200">
                                           {{ __('Vous etes sure ?')}}
@@ -159,12 +159,12 @@
                                       <div class="space-x-3">
                                         <button
                                           @click="showModal = false"
-                                          class="btn min-w-[7rem] rounded-full border border-slate-300 font-medium text-slate-800 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-50 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90"
+                                          class="btn bg-primary/10 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
                                         >
                                           {{ __('Annuler')}}
                                         </button>
                                         {!! Form::open(['method' => 'DELETE','route' => ['permissions/destroy', $permission->id],'style'=>'display:inline']) !!}
-                                        {!! Form::submit('Delete', ['class' => 'btn min-w-[7rem] rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90']) !!}
+                                        {!! Form::submit('Delete', ['class' => 'btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25']) !!}
                                         {!! Form::close() !!}
                                       </div>
                                     </div>
