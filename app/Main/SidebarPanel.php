@@ -672,7 +672,26 @@ class SidebarPanel
         ];
     }
 
+    public static function permissions()
+    {
+        return [
+            'title' => 'Permissions',
+            'items' => [
+                [
+                    'elements_avatar' => [
+                        'title' => 'Liste',
+                        'route_name' => 'permissions/liste'
+                    ],
+                    'elements_alert' => [
+                        'title' => 'Creation permission',
+                        'route_name' => 'permissions/create'
+                    ],
+                ],
+            ]
+        ];
+    }
+
     public static function all(){
-        return [self::dashboards(),self::apps(), self::layouts(), self::forms(), self::components(), self::elements()];
+        return [self::dashboards(),self::apps(), self::layouts(), self::forms(), self::components(), self::elements(), self::permissions()];
     }
 }

@@ -28,9 +28,9 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $data = Permission::orderBy('id','DESC')->paginate(5);
+        $data = Permission::orderBy('id','DESC')->paginate(12);
 
-        return view('permissions.index', compact('data'));
+        return view('permissions/index', compact('data'));
     }
 
     /**
@@ -57,7 +57,7 @@ class PermissionController extends Controller
     
         Permission::create(['name' => $request->input('name')]);
     
-        return redirect()->route('permissions.index')
+        return redirect()->route('permissions/liste')
             ->with('success', 'Permission created successfully.');
     }
 

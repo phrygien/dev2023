@@ -26,7 +26,11 @@ Route::middleware('guest')->group(function () {
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('users', UserController::class);
     Route::resource('roles', RoleController::class);
-    Route::resource('permissions', PermissionController::class);
+    Route::get('permissions/liste', [PermissionController::class, 'index'])->name('permissions/liste');
+    Route::get('permissions/create', [PermissionController::class, 'create'])->name('permissions/create');
+    Route::post('permissions/store', [PermissionController::class, 'store'])->name('permissions/store');
+    Route::get('permissions/edit/{id}', [PermissionController::class, 'edit'])->name('permissions/edit');
+    Route::patch('permissions/update/{id}', [PermissionController::class, 'update'])->name('permissions/update');
 });
 
 Route::middleware('auth')->group(function () {
