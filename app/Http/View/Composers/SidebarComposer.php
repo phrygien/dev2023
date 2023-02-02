@@ -41,6 +41,10 @@ class SidebarComposer
                 case 'permissions':
                     $view->with('sidebarMenu', SidebarPanel::permissions());
                     break;
+                case 'users':
+                    $view->with('sidebarMenu', SidebarPanel::users());
+                    break;
+
                 default:
                     $view->with('sidebarMenu', SidebarPanel::dashboards());
             }

@@ -691,6 +691,25 @@ class SidebarPanel
         ];
     }
 
+    public static function users()
+    {
+        return [
+            'title' => 'Users',
+            'items' => [
+                [
+                    'elements_avatar' => [
+                        'title' => 'Liste',
+                        'route_name' => 'users/liste'
+                    ],
+                    'elements_alert' => [
+                        'title' => 'Creation utilisateur',
+                        'route_name' => 'users/create'
+                    ],
+                ],
+            ]
+        ];
+    }
+
     public static function all(){
         return [self::dashboards(),self::apps(), self::layouts(), self::forms(), self::components(), self::elements(), self::permissions()];
     }
