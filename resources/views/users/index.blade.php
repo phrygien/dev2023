@@ -1,6 +1,12 @@
 <x-app-layout title="Liste utilisateur" is-sidebar-open="false" is-header-blur="true">
     <main class="main-content w-full px-[var(--margin-x)] pb-8">
-        <div class="flex items-center space-x-4 py-5 lg:py-6">
+      @if (\Session::has('success'))
+      <div  class="alert flex bg-success/10 py-4 px-4 text-success dark:bg-success/15 sm:px-5">
+          <p>{{ \Session::get('success') }}</p>
+      </div>
+      @endif
+
+        <div class="flex items-center space-x-4 py-5 lg:py-6 mt-2">
           <h2
             class="text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl"
           >
@@ -264,7 +270,7 @@
                       <th
                         class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
                       >
-                        #
+                        # ID
                       </th>
                       <th
                         class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
@@ -294,7 +300,7 @@
                     <tr
                       class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
                     >
-                      <td class="whitespace-nowrap px-4 py-3 sm:px-5">1</td>
+                      <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $user->id }}</td>
                       <td
                         class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5"
                       >
@@ -318,7 +324,7 @@
                         <button
                         class="btn border border-info/30 bg-info/10 font-medium text-info  hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
                       >
-                        {{ __('Modifier')}}
+                        {{ __('Editer')}}
                       </button>
                       <button
                       class="btn border border-error/30 bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"

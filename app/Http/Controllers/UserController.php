@@ -31,7 +31,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id', 'desc')->paginate(12);
+        $data = User::orderBy('id', 'desc')->paginate(10);
         
         return view('users.index', compact('data'));
     }
@@ -44,7 +44,6 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
-
         return view('users.create', compact('roles'));
     }
 
@@ -69,7 +68,7 @@ class UserController extends Controller
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users.index')
+        return redirect()->route('users/liste')
             ->with('success', 'User created successfully.');
     }
 
