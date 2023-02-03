@@ -8,25 +8,23 @@
                 </div>
             </div>
             <h3 class="mt-3 text-xl font-semibold text-slate-600 dark:text-navy-100">
-                Lineone Applications
+                {{ __('Mesoft')}}
             </h3>
             <p class="mt-0.5 text-base">
-                List of prebuilt applications of Lineone
+               {{ __('Liste des applications préconstruites de Mesoft') }}
             </p>
         </div>
         <div class="mx-auto mt-8 grid w-full max-w-4xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:gap-6">
             <div class="card p-4 sm:p-5">
                 <div class="avatar h-12 w-12">
                     <div class="is-initial rounded-full bg-info text-white">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+                          </svg>                          
                     </div>
                 </div>
                 <h2 class="mt-5 text-base font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
-                    Chat App
+                    {{ __('Education')}}
                 </h2>
                 <p class="mt-1">
                     Lineone prebuilt Messaging UI kit includes designs for social
@@ -49,7 +47,7 @@
                     </div>
                 </div>
                 <h2 class="mt-5 text-base font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100">
-                    Kanban Board
+                    {{ __('Notes')}}
                 </h2>
                 <p class="mt-1">
                     The Kanban Board to keep track of your personal and work tasks.

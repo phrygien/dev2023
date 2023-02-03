@@ -37,6 +37,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('users/liste', [UserController::class, 'index'])->name('users/liste');
     Route::get('users/create', [UserController::class, 'create'])->name('users/create');
     Route::post('users/store', [UserController::class, 'store'])->name('users/store');
+
+    Route::get('ecoles/page', [PagesController::class, 'ecolePage'])->name('ecoles/page');
 });
 
 Route::middleware('auth')->group(function () {
