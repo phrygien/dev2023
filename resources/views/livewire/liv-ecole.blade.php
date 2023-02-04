@@ -1,3 +1,190 @@
+<main class="main-content w-full px-[var(--margin-x)] pb-8">
+  @if($createMode)
+  <form wire:submit.prevent="submit" enctype="multipart/form-data">
+      <div class="flex flex-col items-center justify-between space-y-4 py-5 sm:flex-row sm:space-y-0 lg:py-6">
+        <div class="flex items-center space-x-1">
+            <h2
+            class="text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl"
+          >
+            {{ __('Ecoles')}}
+          </h2>
+          <div class="hidden h-full py-1 sm:flex">
+            <div class="h-full w-px bg-slate-300 dark:bg-navy-600"></div>
+          </div>
+          <ul class="hidden flex-wrap items-center space-x-2 sm:flex">
+            <li>{{ __('Création école')}}</li>
+          </ul>
+        </div>
+        <div class="flex justify-center space-x-2">
+            <button wire:click='cancelCreate()'
+            class="btn border border-secondary/30 bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:border-secondary-light/30 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25">
+                {{ __('Revenir au liste ecole')}}
+            </button>
+            <button wire:click='resetInputFields()'
+            class="btn border border-warning/30 bg-warning/10 font-medium text-warning hover:bg-warning/20 focus:bg-warning/20 active:bg-warning/25">
+                {{ __('Reset')}}
+            </button>
+            <button
+            class="btn border border-success/30 bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
+                {{ __('Enregistrer')}}
+            </button>
+        </div>
+    </div>
+@else
+@if (session()->has('message'))
+<div  class="alert flex bg-success/10 py-4 px-4 text-success dark:bg-success/15 sm:px-5">
+  {{ session('message') }}
+</div>
+@endif
+  <div class="flex items-center space-x-4 py-5 lg:py-6">
+    <h2
+      class="text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl"
+    >
+      {{ __('Ecoles')}}
+    </h2>
+    <div class="hidden h-full py-1 sm:flex">
+      <div class="h-full w-px bg-slate-300 dark:bg-navy-600"></div>
+    </div>
+    <ul class="hidden flex-wrap items-center space-x-2 sm:flex">
+      <li>{{ __('Liste')}}</li>
+    </ul>
+  </div>
+  @endif
+@if($createMode)
+<div class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
+  <div class="col-span-12 lg:col-span-8">
+      <div class="card">
+          <div class="tabs flex flex-col">
+              <div class="tab-content p-4 sm:p-5">
+                  <div class="space-y-5">
+                      <label class="block">
+                          <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Nom école')}}</span>
+                          <input wire:model='ecole_name'
+                              class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                              placeholder="Entrer nom de l'école" type="text" />
+                              @error('ecole_name') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                      </label>
+                      <label class="block">
+                          <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Code école')}}</span>
+                          <input wire:model='ecole_code'
+                              class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                              placeholder="Entrer le code de l'école" type="text" />
+                              @error('ecole_code') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                      </label>
+                      <div>
+                          <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Description')}}</span>
+                          <div
+                          class="rounded-lg border border-slate-300 transition-colors duration-200 focus-within:!border-primary hover:border-slate-400 dark:border-navy-450 dark:focus-within:!border-accent dark:hover:border-navy-400"
+                        >
+                          <label class="block">
+                            <textarea wire:model='ecole_description'
+                              rows="5"
+                              placeholder="Entrer description de l'école"
+                              class="form-textarea w-full resize-none bg-transparent p-3 pt-0 placeholder:text-slate-400/70"
+                            ></textarea>
+                          </label>
+                        </div>
+                              @error('ecole_description') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                      </div>
+                      <div>
+                          <label
+                          class="btn relative bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+                        >
+                          <input wire:model='ecole_logo'
+                            tabindex="-1"
+                            type="file"
+                            class="pointer-events-none absolute inset-0 h-full w-full opacity-0"
+                          />
+                          <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-cloud-arrow-up text-base"></i>
+                            <span>{{ __('Logo école')}}</span>
+                          </div>
+                        </label>
+                          @error('ecole_logo') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                      </div>
+                      <label class="block">
+                        <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Numero téléèphone')}}</span>
+                        <input wire:model='telephone_ecole'
+                            class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                            placeholder="Entrer le code de l'école" type="text" />
+                            @error('telephone_ecole') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                    </label>
+                      <label class="block">
+                        <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Email école')}}</span>
+                        <input wire:model='ecole_email'
+                            class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                            placeholder="Entrer le code de l'école" type="text" />
+                            @error('ecole_email') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                      </label>
+                    <label class="block">
+                      <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Ville école')}}</span>
+                      <input wire:model='ville'
+                          class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                          placeholder="Entrer le ville de l'école" type="text" />
+                          @error('ville') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                  </label>
+                  <label class="block">
+                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Adresse')}}</span>
+                    <input wire:model='adresse'
+                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                        placeholder="Entrer l'adresse de l'école" type="text" />
+                        @error('adresse') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                  </label>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="col-span-12 lg:col-span-4">
+      <div class="card space-y-5 p-4 sm:p-5">
+        <label class="block">
+          <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Responsable')}}</span>
+          <input wire:model='responsable'
+              class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+              placeholder="Entrer nom et prénomresponsable" type="text" />
+              @error('responsable') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+      </label>
+        <label class="block">
+          <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Télèphone')}}</span>
+          <input wire:model='telephone_responsable'
+              class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+              placeholder="Entrer numero telephone responsable" type="text" />
+              @error('telephone_responsable') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+      </label>
+          <label class="block">
+            <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Email')}}</span>
+            <input wire:model='email_responsable'
+                class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                placeholder="Entrer email responsable" type="text" />
+                @error('email_responsable') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+        </label>
+        <label class="block">
+          <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Type ecole')}}</span>
+          <select wire:model='type_ecole'
+          class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent"
+        >
+          <option>{{ __('Sellectioner type école')}}</option>
+          <option value="0">{{ __('Public')}}</option>
+          <option value="1">{{ __('Privé')}}</option>
+        </select>
+              @error('type_ecole') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+        </label>
+          <label class="block">
+            <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Status école')}}</span>
+            <select wire:model='status'
+            class="form-select mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:bg-navy-700 dark:hover:border-navy-400 dark:focus:border-accent"
+          >
+            <option>{{ __('Sellectioner satatus école')}}</option>
+            <option value="1">{{ __('Activé')}}</option>
+            <option value="0">{{ __('Desactivé')}}</option>
+          </select>
+                @error('status') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+        </label>
+      </div>
+  </div>
+</div>
+<form
+@else
 <div class="grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6">
     <!-- Table With Filter -->
     <div x-data="{isFilterExpanded:false}">
@@ -7,11 +194,6 @@
         >
           {{ __('Créer') }}
           </button>
-          @if($createMode)
-            create formular was here
-            @else
-                create mode false
-            @endif
         <div class="flex">
           <div class="flex items-center" x-data="{isInputActive:false}">
             <label class="block">
@@ -291,7 +473,7 @@
                     <div class="avatar flex">
                       <img
                         class="rounded-full"
-                        src="{{asset('images/200x200.png')}}"
+                        src="{{ asset('storage/'.$ecole->ecole_logo) }}"
                         alt="avatar"
                       />
                     </div>
@@ -400,13 +582,13 @@
                                 <div class="flex space-x-2">
                                     @if($ecole->ecole_type !=1)
                                   <div
-                                    class="badge rounded-full border border-info text-info"
+                                    class="badge rounded-full border border-warning text-warning"
                                   >
                                     {{ __('Privé')}}
                                   </div>
                                   @else
                                   <div
-                                    class="badge rounded-full border border-info text-info"
+                                    class="badge rounded-full border border-warning text-warning"
                                   >
                                     {{ __('Public')}}
                                   </div>
@@ -496,3 +678,4 @@
       </div>
     </div>
   </div>
+  @endif

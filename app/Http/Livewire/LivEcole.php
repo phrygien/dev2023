@@ -29,6 +29,10 @@ class LivEcole extends Component
         $this->createMode = true;
     }
 
+    public function cancelCreate()
+    {
+        $this->createMode = false;
+    }
     public function resetInputFields()
     {
         $this->ecole_name = '';
@@ -48,22 +52,24 @@ class LivEcole extends Component
 
     public function submit()
     {
+        
         $validatedData = $this->validate([
             'ecole_name' => 'required',
             'ecole_code' => 'required',
-            'ecole_logo' => 'required|image|mimes:jpeg,png,svg,jpg',
+            'ecole_logo' => 'nullable|image|mimes:jpeg,png,svg,jpg',
             'telephone_ecole' => 'required|unique:ecoles',
             'ecole_email' => 'required|unique:ecoles',
             'ville' => 'required',
             'adresse' => 'required',
             'responsable' => 'required',
             'telephone_responsable' => 'required|unique:ecoles',
-            'email_responsable' => 'nullable|unique:ecoles',
+            'email_responsable' => 'required|unique:ecoles',
             'type_ecole' => 'required',
-            'ecole_description' => 'nullable'
+            'ecole_description' => 'required',
+            'status' => 'required'
         ]);
-
-        $logoName = $this->ecole_logo->store("images", 'public');
+        
+        $logoName = $this->ecole_logo->store("images/ecoles", 'public');
         $validatedData['ecole_logo'] = $logoName;
         Ecole::create($validatedData);
 
