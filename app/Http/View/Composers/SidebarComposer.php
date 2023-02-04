@@ -44,6 +44,9 @@ class SidebarComposer
                 case 'users':
                     $view->with('sidebarMenu', SidebarPanel::users());
                     break;
+                case 'educations':
+                    $view->with('sidebarMenu', SidebarPanel::educations());
+                    break;
 
                 default:
                     $view->with('sidebarMenu', SidebarPanel::dashboards());

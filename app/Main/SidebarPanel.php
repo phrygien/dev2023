@@ -710,7 +710,113 @@ class SidebarPanel
         ];
     }
 
+    public static function educations()
+    {
+        return [
+            'title' => 'Educations',
+            'items' => [
+                [
+                    'components_accordion' => [
+                        'title' => 'Ecoles',
+                        'route_name' => 'educations/ecole'
+                    ],
+                    'components_collapse' => [
+                        'title' => 'Collapse',
+                        'route_name' => 'components/collapse'
+                    ],
+                    'components_tab' => [
+                        'title' => 'Tab',
+                        'route_name' => 'components/tab'
+                    ],
+                    'components_dropdown' => [
+                        'title' => 'Dropdown',
+                        'route_name' => 'components/dropdown'
+                    ],
+                    'components_popover' => [
+                        'title' => 'Popover',
+                        'route_name' => 'components/popover'
+                    ],
+                    'components_modal' => [
+                        'title' => 'Modal',
+                        'route_name' => 'components/modal'
+                    ],
+                    'components_drawer' => [
+                        'title' => 'Drawer',
+                        'route_name' => 'components/drawer'
+                    ],
+                    'components_steps' => [
+                        'title' => 'Steps',
+                        'route_name' => 'components/steps'
+                    ],
+                    'components_timeline' => [
+                        'title' => 'Timeline',
+                        'route_name' => 'components/timeline'
+                    ],
+                    'components_pagination' => [
+                        'title' => 'Pagination',
+                        'route_name' => 'components/pagination'
+                    ],
+                    'components_menu_list' => [
+                        'title' => 'Menu List',
+                        'route_name' => 'components/menu-list'
+                    ],
+                    'components_treeview' => [
+                        'title' => 'Treeview',
+                        'route_name' => 'components/treeview'
+                    ],
+
+                ],
+                [
+                    'components_table' => [
+                        'title' => 'Table',
+                        'route_name' => 'components/table'
+                    ],
+
+                    'components_table_advanced' => [
+                        'title' => 'Table Advanced',
+                        'route_name' => 'components/table-advanced'
+                    ],
+
+                    'components_table_gridjs' => [
+                        'title' => 'Table Gridjs',
+                        'route_name' => 'components/gridjs'
+                    ],
+                ],
+                [
+                    'components_apexchart' => [
+                        'title' => 'Apexcharts',
+                        'route_name' => 'components/apexchart'
+                    ],
+
+                    'components_carousel' => [
+                        'title' => 'Carousel',
+                        'route_name' => 'components/carousel'
+                    ],
+
+                    'components_notification' => [
+                        'title' => 'Notification',
+                        'route_name' => 'components/notification'
+                    ],
+                ],
+                [
+                    'components_extension_clipboard' => [
+                        'title' => 'Clipboard',
+                        'route_name' => 'components/extension-clipboard'
+                    ],
+                    'components_extension_persist' => [
+                        'title' => 'Persist',
+                        'route_name' => 'components/extension-persist'
+                    ],
+                    'components_extension_monochrome' => [
+                        'title' => 'Monochrome Mode',
+                        'route_name' => 'components/extension-monochrome'
+                    ],
+                ],
+            ]
+        ];
+    }
+
     public static function all(){
-        return [self::dashboards(),self::apps(), self::layouts(), self::forms(), self::components(), self::elements(), self::permissions()];
+        return [self::dashboards(),self::apps(), self::layouts(), self::forms(), self::components(), self::elements(), self::permissions(), self::educations()];
     }
 }

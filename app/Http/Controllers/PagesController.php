@@ -647,7 +647,7 @@ class PagesController extends Controller
         return view('pages/dashboards-widget-contacts');
     }
 
-    public function ecolesPage()
+    public function ecolePage()
     {
         return view('ecoles/page');
     }

@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('users/create', [UserController::class, 'create'])->name('users/create');
     Route::post('users/store', [UserController::class, 'store'])->name('users/store');
 
-    Route::get('ecoles/page', [PagesController::class, 'ecolePage'])->name('ecoles/page');
+    Route::get('educations/ecole', [PagesController::class, 'ecolePage'])->name('educations/ecole');
 });
 
 Route::middleware('auth')->group(function () {
