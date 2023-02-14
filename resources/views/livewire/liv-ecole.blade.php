@@ -30,12 +30,12 @@
             </button>
         </div>
     </div>
+    @if (session()->has('message'))
+      <div  class="alert flex bg-success/10 py-4 px-4 text-success dark:bg-success/15 sm:px-5 mb-2">
+        {{ session('message') }}
+      </div>
+    @endif
 @else
-@if (session()->has('message'))
-<div  class="alert flex bg-success/10 py-4 px-4 text-success dark:bg-success/15 sm:px-5">
-  {{ session('message') }}
-</div>
-@endif
   <div class="flex items-center space-x-4 py-5 lg:py-6">
     <h2
       class="text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl"
@@ -49,7 +49,7 @@
       <li>{{ __('Liste')}}</li>
     </ul>
   </div>
-  @endif
+@endif
 @if($createMode)
 <div class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
   <div class="col-span-12 lg:col-span-8">
@@ -86,22 +86,20 @@
                         </div>
                               @error('ecole_description') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
                       </div>
-                      <div>
-                          <label
-                          class="btn relative bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+                      <label
+                            class="btn relative bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
                         >
-                          <input wire:model='ecole_logo'
+                            <input wire:model="ecole_logo"
                             tabindex="-1"
                             type="file"
                             class="pointer-events-none absolute inset-0 h-full w-full opacity-0"
-                          />
-                          <div class="flex items-center space-x-2">
+                            />
+                            <div class="flex items-center space-x-2">
                             <i class="fa-solid fa-cloud-arrow-up text-base"></i>
-                            <span>{{ __('Logo école')}}</span>
-                          </div>
+                            <span>Choose File</span>
+                            </div>
                         </label>
-                          @error('ecole_logo') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
-                      </div>
+                        @error('ecole_logo') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
                       <label class="block">
                         <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Numero téléèphone')}}</span>
                         <input wire:model='telephone_ecole'
@@ -183,7 +181,6 @@
       </div>
   </div>
 </div>
-<form
 @else
 <div class="grid grid-cols-1 gap-4 sm:gap-5 lg:gap-6">
     <!-- Table With Filter -->
@@ -646,14 +643,14 @@
                         </div>
                         <div class="text-right">
                             <button
-                            @click="expanded = false"
-                            class="btn mt-2 h-8 rounded px-3 text-xs+ font-medium text-warning hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
+                            wire:click='edit({{ $ecole->id }})'
+                            class="btn border border-info/30 bg-info/10 font-medium text-info  hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
                           >
                             {{ __('Modier')}}
                           </button>
                           <button
                           @click="expanded = false"
-                          class="btn mt-2 h-8 rounded px-3 text-xs+ font-medium text-danger hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
+                          class="btn border border-warning/30 bg-warning/10 font-medium text-warning hover:bg-warning/20 focus:bg-warning/20 active:bg-warning/25"
                         >
                           {{ __('Supprimer')}}
                         </button>
@@ -661,7 +658,7 @@
                             @click="expanded = false"
                             class="btn mt-2 h-8 rounded px-3 text-xs+ font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
                           >
-                            Hide
+                            {{ __('Fermer')}}
                           </button>
                         </div>
                       </div>
@@ -677,5 +674,5 @@
           </div>
       </div>
     </div>
-  </div>
-  @endif
+</div>
+@endif

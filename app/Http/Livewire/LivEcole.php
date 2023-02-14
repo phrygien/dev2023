@@ -52,11 +52,10 @@ class LivEcole extends Component
 
     public function submit()
     {
-        
         $validatedData = $this->validate([
             'ecole_name' => 'required',
             'ecole_code' => 'required',
-            'ecole_logo' => 'nullable|image|mimes:jpeg,png,svg,jpg',
+            'ecole_logo' => 'nullable|mimes:png,jpg,jpeg,gif',
             'telephone_ecole' => 'required|unique:ecoles',
             'ecole_email' => 'required|unique:ecoles',
             'ville' => 'required',
@@ -68,8 +67,8 @@ class LivEcole extends Component
             'ecole_description' => 'required',
             'status' => 'required'
         ]);
-        
-        $logoName = $this->ecole_logo->store("images/ecoles", 'public');
+
+        $logoName = $this->ecole_logo->store("images", 'public');
         $validatedData['ecole_logo'] = $logoName;
         Ecole::create($validatedData);
 
@@ -134,7 +133,7 @@ class LivEcole extends Component
     public function delete($id)
     {
         Ecole::find($id)->delete();
-        
+
         session()->flash('message', 'Suppression avec succée');
     }
 }
