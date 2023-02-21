@@ -39,6 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('users/store', [UserController::class, 'store'])->name('users/store');
 
     Route::get('educations/ecole', [PagesController::class, 'ecolePage'])->name('educations/ecole');
+    Route::get('educations/anneescolaire', [PagesController::class, 'anneescolairePage'])->name('educations/anneescolaire');
 });
 
 Route::middleware('auth')->group(function () {

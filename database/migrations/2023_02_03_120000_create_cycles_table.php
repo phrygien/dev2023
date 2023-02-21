@@ -18,9 +18,7 @@ return new class extends Migration
             $table->string('cycle_name');
             $table->string('cycle_code');
             $table->unsignedInteger('ecole_id');
-            $table->foreign('ecole_id')->references('id')->on('ecoles');
             $table->unsignedBigInteger('annee_id');
-            $table->foreign('annee_id')->references('id')->on('anneescolaires');
             $table->timestamps();
         });
     }

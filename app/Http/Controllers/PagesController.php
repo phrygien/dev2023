@@ -651,4 +651,9 @@ class PagesController extends Controller
     {
         return view('ecoles/page');
     }
+
+    public function anneescolairePage()
+    {
+        return view('anneescolaires/page');
+    }
 }

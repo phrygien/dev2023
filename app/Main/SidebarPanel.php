@@ -721,8 +721,8 @@ class SidebarPanel
                         'route_name' => 'educations/ecole'
                     ],
                     'components_collapse' => [
-                        'title' => 'Collapse',
-                        'route_name' => 'components/collapse'
+                        'title' => 'Année scolaire',
+                        'route_name' => 'educations/anneescolaire'
                     ],
                     'components_tab' => [
                         'title' => 'Tab',
