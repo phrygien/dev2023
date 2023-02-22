@@ -1,11 +1,11 @@
-<div x-data="{showModal:false}" wire:ignore.self>
+<div x-data="{showModal:false}">
     <button
       @click="showModal = true"
       class="btn bg-secondary font-medium text-white hover:bg-secondary-focus focus:bg-secondary-focus active:bg-secondary-focus/90"
     >
       {{ __('Créer') }}
     </button>
-    <template x-teleport="#x-teleport-target">
+    <template x-teleport="#x-teleport-target" wire:ignore.self>
       <div
         class="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden px-4 py-6 sm:px-5"
         x-show="showModal"
@@ -59,8 +59,8 @@
               </svg>
             </button>
           </div>
+          <form wire:submit.prevent="store">
           <div class="px-4 py-4 sm:px-5">
-            <form>
             <div class="mt-4 space-y-4">
               <label class="block">
                 <span>{{ __('Status :') }}</span>
@@ -104,6 +104,7 @@
                   class="form-textarea mt-1.5 w-full resize-none rounded-lg border border-slate-300 bg-transparent p-2.5 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                 >
               </label>
+            </form>
               <div class="space-x-2 text-right">
                 <button
                   @click="showModal = false"
@@ -118,9 +119,9 @@
                 </button>
               </div>
             </div>
-            </form>
             </div>
           </div>
+          </form>
         </div>
       </div>
     </template>

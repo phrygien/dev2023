@@ -10,13 +10,24 @@ class LivAnneescolaire extends Component
 {
     public $annee_scolaire_id, $annee_name, $date_debut, $date_fin, $ecole_id, $status;
     public $updateMode = false;
+    public $createMode = false;
+
+    // defer loading
+    public $readyToLoad = false;
+
+    public function loadAnneescolaires()
+    {
+        $this->readyToLoad = true;
+    }
 
     public function render()
     {
-        $anneescolaire = Anneescolaire::where('ecole_id', Auth::user()->ecole_id)->get();
+        //$anneescolaire = Anneescolaire::where('ecole_id', Auth::user()->ecole_id)->get();
         return view('livewire.liv-anneescolaire',
         [
-            'anneescolaires' => $anneescolaire
+            'anneescolaires' => $this->readyToLoad
+            ? Anneescolaire::all()
+            : [],
         ]
     );
     }
@@ -29,6 +40,17 @@ class LivAnneescolaire extends Component
         $this->status = '';
     }
 
+    public function create()
+    {
+        $this->createMode = true;
+    }
+
+    public function cancelCreate()
+    {
+        $this->createMode = false;
+        $this->resetInputFields();
+    }
+
     public function store()
     {
         $validatedData = $this->validate([
@@ -39,6 +61,8 @@ class LivAnneescolaire extends Component
             'status' => 'nullable'
         ]);
 
+        $ecole_id = Auth::user()->ecole_id;
+        $validatedData['ecole_id'] = $ecole_id;
         Anneescolaire::create($validatedData);
         session()->flash('message', 'Année scolaire bien enregistré');
         $this->resetInputFields();
@@ -85,9 +109,34 @@ class LivAnneescolaire extends Component
     public function delete($id)
     {
         if($id){
-            User::where('id',$id)->delete();
+            Anneescolaire::where('id',$id)->delete();
             session()->flash('message', 'Users Deleted Successfully.');
         }
+    }
+
+    public function ouvrir($id)
+    {
+        $countAnneOuvert = Anneescolaire::where('ecole_id',Auth::user()->ecole_id)->where('statut',1)->first();
+
+        if($countAnneOuvert ==null)
+        {
+            $anneeObject = Anneescolaire::find($id);
+            $anneeObject->statut = 1;
+            $anneeObject->save();
+
+            session()->flash('message', 'Année bien ouvert.');
+        }else{
+            session()->flash('errors', 'Erreur, Un autre année déjà ouvert.');
+        }
+    }
+
+    public function fermer($id)
+    {
+        $anneeObject = Anneescolaire::find($id);
+        $anneeObject->statut = 0;
+        $anneeObject->save();
+
+        session()->flash('message', 'Année bien fermer.');
     }
 }
 
