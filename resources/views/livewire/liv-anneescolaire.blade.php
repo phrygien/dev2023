@@ -110,6 +110,103 @@
             </div>
         </div>
     </form>
+    @elseif($updateMode)
+    <form wire:submit.prevent="update" enctype="multipart/form-data">
+    <div class="flex flex-col items-center justify-between space-y-4 py-5 sm:flex-row sm:space-y-0 lg:py-6">
+        <div class="flex items-center space-x-4 py-5 lg:py-6">
+            <h2
+                class="text-xl font-medium text-slate-800 dark:text-navy-50 lg:text-2xl"
+            >
+                {{ __('Education')}}
+            </h2>
+            <div class="hidden h-full py-1 sm:flex">
+                <div class="h-full w-px bg-slate-300 dark:bg-navy-600"></div>
+            </div>
+            <ul class="hidden flex-wrap items-center space-x-2 sm:flex">
+                <li class="flex items-center space-x-2">
+                <a
+                    class="text-primary transition-colors hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
+                    href="#"
+                    >{{ __('Année scolaire') }}</a
+                >
+                <svg
+                    x-ignore
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                    />
+                </svg>
+                </li>
+                <li>{{ __('Modification') }}</li>
+            </ul>
+            </div>
+            <div class="flex justify-center space-x-2">
+                <button wire:click="cancelCreate()"
+                    class="btn min-w-[7rem] border border-slate-300 font-medium text-slate-700 hover:bg-slate-150 focus:bg-slate-150 active:bg-slate-150/80 dark:border-navy-450 dark:text-navy-100 dark:hover:bg-navy-500 dark:focus:bg-navy-500 dark:active:bg-navy-500/90">
+                    {{ __('Annuler')}}
+                </button>
+                <div wire:loading>
+                <button
+                    class="btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                    {{ __('modification en cours...')}}
+                </button>
+                </div>
+                <div wire:loading.remove>
+                <button
+                    class="btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
+                    {{ __('Enregistrer')}}
+                </button>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-12 gap-4 sm:gap-5 lg:gap-6">
+            <div class="col-span-12 lg:col-span-12">
+                <div class="card">
+                    <div class="tabs flex flex-col">
+                        <div class="tab-content p-4 sm:p-5">
+                            <div class="space-y-5">
+                                <label class="block">
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Libelle') }}</span>
+                                    <input wire:model="annee_name"
+                                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Nom année scolaire" type="text" />
+                                        @error('annee_name') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                </label>
+                                <label class="block">
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Date debut') }}</span>
+                                    <input wire:model="date_debut"
+                                        x-init="$el._x_flatpickr = flatpickr($el)"
+                                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Entrer date debut" type="text" />
+                                        @error('date_debut') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                </label>
+
+                                <label class="block">
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Date fin') }}</span>
+                                    <input wire:model="date_fin"
+                                        x-init="$el._x_flatpickr = flatpickr($el)"
+                                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="Entrer date fin" type="text" />
+                                        @error('date_fin') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                </label>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
     @else
         <div class="flex items-center space-x-4 py-5 lg:py-6">
           <h2
@@ -152,7 +249,7 @@
             <div class="flex items-center justify-between">
             <button
                 wire:click="create()"
-                class="btn bg-secondary font-medium text-white hover:bg-secondary-focus focus:bg-secondary-focus active:bg-secondary-focus/90"
+                class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
             >
                 {{ __('Créer')}}
             </button>
@@ -446,34 +543,41 @@
                         {{ $annee->date_fin }}
                       </td>
                       <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                        @if($annee->statut ==1)
                         <div
-                          class="badge space-x-2.5 px-0 text-primary dark:text-accent-light"
+                        class="badge bg-secondary/10 text-secondary dark:bg-secondary-light/15 dark:text-secondary-light"
                         >
-                          <div class="h-2 w-2 rounded-full bg-current"></div>
-                          <span>{{ $annee->status}}</span>
+                          {{ __('Ouvert') }}
                         </div>
+                        @else
+                        <div
+                        class="badge bg-warning/10 text-warning dark:bg-warning/15"
+                        >
+                          {{ __('Fermé') }}
+                        </div>
+                        @endif
                       </td>
                       <td class="whitespace-nowrap px-4 py-3 sm:px-5">
                         @if($annee->statut == 0)
                       <button wire:click="ouvrir({{ $annee->id }})"
-                            class="btn bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+                      class="btn bg-info/10 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
                         >
                           {{ __('ouvrir')}}
                         </button>
                         @else
                         <button wire:click="fermer({{ $annee->id }})"
-                            class="btn bg-warning font-medium text-white hover:bg-warning-focus focus:bg-warning-focus active:bg-warning-focus/90"
+                        class="btn bg-warning/10 font-medium text-warning hover:bg-warning/20 focus:bg-warning/20 active:bg-warning/25"
                         >
                             {{ __('fermer')}}
                         </button>
                         @endif
-                        <button
-                            class="btn bg-success font-medium text-white hover:bg-success-focus focus:bg-success-focus active:bg-success-focus/90"
+                        <button wire:click="edit({{ $annee->id }} )"
+                        class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25"
                         >
                             {{ __('editer')}}
                         </button>
                         <button
-                            class="btn bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90"
+                        class="btn bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
                         >
                             {{ __('supprimer')}}
                         </button>

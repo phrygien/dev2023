@@ -5,12 +5,15 @@ namespace App\Http\Livewire;
 use App\Models\Anneescolaire;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class LivAnneescolaire extends Component
 {
     public $annee_scolaire_id, $annee_name, $date_debut, $date_fin, $ecole_id, $status;
     public $updateMode = false;
     public $createMode = false;
+
+    use WithPagination;
 
     // defer loading
     public $readyToLoad = false;
@@ -64,7 +67,7 @@ class LivAnneescolaire extends Component
         $ecole_id = Auth::user()->ecole_id;
         $validatedData['ecole_id'] = $ecole_id;
         Anneescolaire::create($validatedData);
-        session()->flash('message', 'Année scolaire bien enregistré');
+        session()->flash('message', 'Donée bien enregistré');
         $this->resetInputFields();
 
         $this->emit('anneescolaireStore'); // fermer modal
@@ -90,18 +93,23 @@ class LivAnneescolaire extends Component
 
     public function update()
     {
-        $validatedDate = $this->validate([
-            'name' => 'required',
-            'email' => 'required|email',
+        $validatedData = $this->validate([
+            'annee_name' => 'required',
+            'date_debut' => 'required|date',
+            'date_fin' => 'required|date',
+            'ecole_id' => 'nullable',
+            'status' => 'nullable'
         ]);
-        if ($this->user_id) {
-            $user = User::find($this->user_id);
-            $user->update([
-                'name' => $this->name,
-                'email' => $this->email,
+        if ($this->annee_scolaire_id) {
+            $anneescolaire = Anneescolaire::find($this->annee_scolaire_id);
+            $anneescolaire->update([
+                'date_debut' => $this->date_debut,
+                'date_fin' => $this->date_fin,
+                'annee_name' => $this->annee_name,
+                'ecole_id' => $this->ecole_id
             ]);
             $this->updateMode = false;
-            session()->flash('message', 'Users Updated Successfully.');
+            session()->flash('message', 'Modification enregistré.');
             $this->resetInputFields();
         }
     }
@@ -110,7 +118,7 @@ class LivAnneescolaire extends Component
     {
         if($id){
             Anneescolaire::where('id',$id)->delete();
-            session()->flash('message', 'Users Deleted Successfully.');
+            session()->flash('message', 'Suppression avec succée.');
         }
     }
 
@@ -124,7 +132,7 @@ class LivAnneescolaire extends Component
             $anneeObject->statut = 1;
             $anneeObject->save();
 
-            session()->flash('message', 'Année bien ouvert.');
+            session()->flash('message', 'Ouverture avec succée.');
         }else{
             session()->flash('errors', 'Erreur, Un autre année déjà ouvert.');
         }
