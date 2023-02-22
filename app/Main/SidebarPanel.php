@@ -729,8 +729,8 @@ class SidebarPanel
                         'route_name' => 'educations/cycle'
                     ],
                     'components_dropdown' => [
-                        'title' => 'Dropdown',
-                        'route_name' => 'components/dropdown'
+                        'title' => 'Enseignants',
+                        'route_name' => 'educations/enseignant'
                     ],
                     'components_popover' => [
                         'title' => 'Popover',
