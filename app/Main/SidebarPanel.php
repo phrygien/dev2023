@@ -725,8 +725,8 @@ class SidebarPanel
                         'route_name' => 'educations/anneescolaire'
                     ],
                     'components_tab' => [
-                        'title' => 'Tab',
-                        'route_name' => 'components/tab'
+                        'title' => 'Cycle',
+                        'route_name' => 'educations/cycle'
                     ],
                     'components_dropdown' => [
                         'title' => 'Dropdown',

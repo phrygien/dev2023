@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('educations/ecole', [PagesController::class, 'ecolePage'])->name('educations/ecole');
     Route::get('educations/anneescolaire', [PagesController::class, 'anneescolairePage'])->name('educations/anneescolaire');
+    Route::get('etucations/cycle', [PagesController::class, 'cyclePage'])->name('educations/cycle');
 });
 
 Route::middleware('auth')->group(function () {
