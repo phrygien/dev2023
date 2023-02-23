@@ -18,7 +18,7 @@ class LivEcole extends Component
 
     public function render()
     {
-        $ecoles = Ecole::paginate(10);
+        $ecoles = Ecole::paginate(2);
         return view('livewire.liv-ecole', [
             'ecoles' => $ecoles
         ]);
@@ -137,4 +137,17 @@ class LivEcole extends Component
         session()->flash('message', 'Suppression avec succée');
     }
 
+    public function activeEcole($ecole_id)
+    {
+        $ecoleObject = Ecole::find($ecole_id)->update(['status' => 1]);
+        session()->flash('message', 'Ecole bien activé!');
+        return redirect()->to('/ecoles');
+    }
+
+    public function desactiveEcole($ecole_id)
+    {
+        $ecoleObject = Ecole::find($ecole_id)->update(['status'=>0]);
+        session()->flash('message', 'Ecole desactivé');
+        return redirect()->to('/ecoles');
+    }
 }
