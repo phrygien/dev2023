@@ -36,6 +36,7 @@ return new class extends Migration
             $table->string('copie_diplome')->nullable();
             $table->unsignedBigInteger('ecole_id');
             $table->foreign('ecole_id')->references('id')->on('ecoles');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
