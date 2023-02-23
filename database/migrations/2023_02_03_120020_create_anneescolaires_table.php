@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('date_fin');
             $table->integer('statut')->default(0);
             $table->unsignedBigInteger('ecole_id');
-            $table->foreign('ecole_id')->references('id')->on('ecoles');
+            //$table->foreign('ecole_id')->references('id')->on('ecoles');
             $table->timestamps();
         });
     }

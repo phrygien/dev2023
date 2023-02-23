@@ -136,4 +136,5 @@ class LivEcole extends Component
 
         session()->flash('message', 'Suppression avec succée');
     }
+
 }

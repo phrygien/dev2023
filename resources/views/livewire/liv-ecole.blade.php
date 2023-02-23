@@ -375,7 +375,7 @@
                     class="form-checkbox is-basic h-5 w-5 rounded border-slate-400/70 checked:border-secondary checked:bg-secondary hover:border-secondary focus:border-secondary dark:border-navy-400 dark:checked:border-secondary-light dark:checked:bg-secondary-light dark:hover:border-secondary-light dark:focus:border-secondary-light"
                     type="checkbox"
                   />
-                  <span>Upcoming</span>
+                  <span>{{ __('Activé')}}</span>
                 </label>
                 <label class="inline-flex items-center space-x-2">
                   <input
