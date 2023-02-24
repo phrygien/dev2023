@@ -1,16 +1,4 @@
-<main class="main-content w-full px-[var(--margin-x)] pb-8">
-
-    <div class="mt-2">
-        @if (session()->has('message'))
-        <div  class="alert flex bg-success/10 py-4 px-4 text-success dark:bg-success/15 sm:px-5 mb-2">
-            {{ session('message') }}
-        </div>
-        @endif
-
-    </div>
-
-    @if($createMode)
-    <div class="flex flex-col items-center justify-between space-y-4 py-5 sm:flex-row sm:space-y-0 lg:py-6">
+<div class="flex flex-col items-center justify-between space-y-4 py-5 sm:flex-row sm:space-y-0 lg:py-6">
             <div class="flex items-center space-x-1">
                 <ul class="hidden flex-wrap items-center space-x-2 sm:flex">
                     <li class="flex items-center space-x-2">
@@ -35,7 +23,7 @@
                         />
                     </svg>
                     </li>
-                    <li>{{ __('Créer') }}</li>
+                    <li>{{ __('Modification') }}</li>
                 </ul>
             </div>
             <div class="flex justify-center space-x-2">
@@ -47,7 +35,7 @@
                 <div wire:loading>
                 <button
                     class="btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-                    {{ __('création en cours...')}}
+                    {{ __('modification en cours...')}}
                 </button>
                 </div>
                 <div wire:loading.remove>
@@ -272,163 +260,5 @@
 
                 </div>
             </div>
-</form>
+            </form>
         </div>
-    @elseif($updateMode)
-        @include('livewire.c_enseignant.update')
-    @else
-    <div class="flex items-center justify-between py-5 lg:py-6">
-        <div class="flex items-center space-x-4 py-5 lg:py-6">
-        <ul class="hidden flex-wrap items-center space-x-2 sm:flex">
-        <li class="flex items-center space-x-2">
-            <a
-            class="text-primary transition-colors hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
-            href="#"
-            >{{ __('Enseignants') }}</a
-            >
-            <svg
-            x-ignore
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 5l7 7-7 7"
-            />
-            </svg>
-        </li>
-        <li>{{ __('Liste') }}</li>
-        </ul>
-    </div>
-    @if(request()->has('view_deleted'))
-    <a href="{{ route('educations/enseignant', ['view_deleted' => 'DeletedRecords']) }}"
-        class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
-    >
-        {{ __('Restor deleted data')}}
-    </a>
-    @else
-    <a href="{{ route('educations/enseignant', ['trashed_data' => 'trash']) }}"
-    class="btn bg-primary/10 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
-    >
-        {{ __('corbeille')}}
-    </a>
-    <button
-        wire:click="create()"
-        class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
-    >
-        {{ __('Créer')}}
-    </button>
-    @endif
-    </div>
-    @if($trashedData)
-    <div
-    class="text-base font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100 mb-2"
-    >
-        <div
-        class="badge bg-info/10 text-info dark:bg-accent-light/15 dark:text-accent-light"
-        >
-            {{ count($trashedDatas)}} {{ __('elements')}}
-        </div>
-        @if(count($trashedDatas) > 0)
-        <button
-        wire:click="restoreAll()"
-        class="btn font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
-        >
-            {{ __('recuperer tous')}}
-        </button>
-        @endif
-    </div>
-    <div wire:init="loadTrashedEnseignants" class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-
-        @foreach ($trashedDatas as $enseignant)
-        <div class="card">
-            <div class="p-2 text-right">
-                <div x-data="usePopper({ placement: 'bottom-end', offset: 4 })" @click.outside="if(isShowPopper) isShowPopper = false"
-                    class="inline-flex">
-                </div>
-            </div>
-            <div class="flex grow flex-col items-center px-4 pb-5 sm:px-5">
-                <div class="avatar h-20 w-20">
-                    <img class="rounded-full "  src="{{ asset('storage/'.$enseignant->photo) }}" alt="avatar" />
-                </div>
-                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                    {{ $enseignant->nom }}
-                </h3>
-                <p class="text-xs+">Tél: {{ $enseignant->telephone_urgenece }}</p>
-                <div class="inline-space mt-3 flex grow flex-wrap items-start">
-                    <a href="#"
-                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                        PHP
-                    </a>
-                    <a href="#"
-                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                        Nodejs
-                    </a>
-                    <a href="#"
-                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                        ReactJS
-                    </a>
-                </div>
-                <div class="mt-6 grid w-full grid-cols-2 gap-2">
-                    <button wire:click="restore({{ $enseignant->id }})"
-                    class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
-                        <span> {{ __('recuperer')}} </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    @else
-    <div wire:init="loadEnseignants" class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-        @foreach ($enseignants as $enseignant)
-        <div class="card">
-            <div class="p-2 text-right">
-                <div x-data="usePopper({ placement: 'bottom-end', offset: 4 })" @click.outside="if(isShowPopper) isShowPopper = false"
-                    class="inline-flex">
-                </div>
-            </div>
-            <div class="flex grow flex-col items-center px-4 pb-5 sm:px-5">
-                <div class="avatar h-20 w-20">
-                    <img class="rounded-full "  src="{{ asset('storage/'.$enseignant->photo) }}" alt="avatar" />
-                </div>
-                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                    {{ $enseignant->nom }}
-                </h3>
-                <p class="text-xs+">Tél: {{ $enseignant->telephone_urgenece }}</p>
-                <div class="inline-space mt-3 flex grow flex-wrap items-start">
-                    <a href="#"
-                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                        PHP
-                    </a>
-                    <a href="#"
-                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                        Nodejs
-                    </a>
-                    <a href="#"
-                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                        ReactJS
-                    </a>
-                </div>
-                <div class="mt-6 grid w-full grid-cols-2 gap-2">
-                    <button wire:click="edit({{ $enseignant->id }})"
-                    class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
-
-                        <span>{{ __('editer')}}</span>
-                    </button>
-                    <button wire:click="delete({{ $enseignant->id }})"
-                    class="btn bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25">
-                        <span> {{ __('supprimer')}} </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        @endforeach
-    @endif
-    </div>
-    @endif
-</main>
