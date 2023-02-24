@@ -119,6 +119,7 @@
                                     <span>{{ __('Photo')}}</span>
                                     </div>
                                 </label>
+                                <div wire:loading wire:target="photo">Uploading...</div>
                                 @error('photo') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
 
                                 <br>
@@ -274,6 +275,7 @@
 </form>
         </div>
     @elseif($updateMode)
+        update mode set to true
     @else
     <div class="flex items-center justify-between py-5 lg:py-6">
         <div class="flex items-center space-x-4 py-5 lg:py-6">
@@ -310,11 +312,18 @@
         {{ __('Restor deleted data')}}
     </a>
     @else
-    <a href="{{ route('educations/enseignant', ['view_deleted' => 'DeletedRecords']) }}"
+    <a href="{{ route('educations/enseignant', ['trashed_data' => 'trash']) }}"
         class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
     >
         {{ __('View deleted data')}}
     </a>
+
+    <button
+        wire:click="restoreAll()"
+        class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
+    >
+        {{ __('Restore All')}}
+    </button>
 
     <button
         wire:click="create()"
@@ -327,45 +336,47 @@
     <div wire:init="loadEnseignants" class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
 
     @foreach ($enseignants as $enseignant)
-        <div class="card">
-            <div class="flex flex-col items-center p-4 text-center sm:p-5">
-                <div class="avatar h-20 w-20">
-                    <img class="rounded-full "  src="{{ asset('storage/'.$enseignant->photo) }}" alt="avatar" />
-                </div>
-                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                    {{ $enseignant->nom }} {{ $enseignant->prenom }}
-                </h3>
-                <p class="text-xs+">{{ $enseignant->telephone_urgenece }}</p>
-                <div class="my-3.5 flex flex-wrap space-x-2">
-                    <div class="avatar h-8 w-8">
-                        <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-                    </div>
-
-                    <div class="avatar h-8 w-8">
-                        <div class="is-initial rounded-full bg-info/10 text-xs+ uppercase text-info">
-                            sm
-                        </div>
-                    </div>
-                    <div class="avatar h-8 w-8">
-                        <div
-                            class="is-initial rounded-full border border-warning/30 bg-warning/10 text-xs+ uppercase text-warning">
-                            uh
-                        </div>
-                    </div>
-                </div>
+    <div class="card">
+        <div class="p-2 text-right">
+            <div x-data="usePopper({ placement: 'bottom-end', offset: 4 })" @click.outside="if(isShowPopper) isShowPopper = false"
+                class="inline-flex">
             </div>
-            <div
-                class="flex divide-x divide-slate-150 border-t border-slate-150 dark:divide-navy-500 dark:border-navy-500">
-                <button
-                    class="btn h-11 w-full rounded-none rounded-bl-lg font-medium text-slate-700 hover:bg-slate-300/20 active:bg-slate-300/25 dark:text-navy-100 dark:hover:bg-navy-300/20 dark:active:bg-navy-300/25">
-                    Profile
+        </div>
+        <div class="flex grow flex-col items-center px-4 pb-5 sm:px-5">
+            <div class="avatar h-20 w-20">
+                <img class="rounded-full "  src="{{ asset('storage/'.$enseignant->photo) }}" alt="avatar" />
+            </div>
+            <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
+                {{ $enseignant->nom }}
+            </h3>
+            <p class="text-xs+">Tél: {{ $enseignant->telephone_urgenece }}</p>
+            <div class="inline-space mt-3 flex grow flex-wrap items-start">
+                <a href="#"
+                    class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                    PHP
+                </a>
+                <a href="#"
+                    class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                    Nodejs
+                </a>
+                <a href="#"
+                    class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                    ReactJS
+                </a>
+            </div>
+            <div class="mt-6 grid w-full grid-cols-2 gap-2">
+                <button wire:click="edit({{ $enseignant->id }})"
+                class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
+
+                    <span>{{ __('editer')}}</span>
                 </button>
-                <button
-                    class="btn h-11 w-full rounded-none rounded-br-lg font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25">
-                    Chat
+                <button wire:click="delete({{ $enseignant->id }})"
+                class="btn bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25">
+                    <span> {{ __('supprimer')}} </span>
                 </button>
             </div>
         </div>
+    </div>
     @endforeach
     </div>
     @endif
