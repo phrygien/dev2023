@@ -136,8 +136,18 @@ class LivEnseignant extends Component
     public function edit($id)
     {
         $this->updateMode = true;
+        $objectEnseignant = Enseignant::findOrFail($id);
+        $this->nom = $objectEnseignant->nom;
+        $this->photo = $objectEnseignant->photo;
+        $this->copie_cin = $objectEnseignant->copie_cin;
+        $this->copie_diplome = $objectEnseignant->copie_diplome;
     }
 
+    public function cancelEdit()
+    {
+        $this->updateMode = false;
+        $this->resetValidation();
+    }
 
     public function delete($id)
     {
