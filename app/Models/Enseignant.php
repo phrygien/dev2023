@@ -35,6 +35,8 @@ class Enseignant extends Model
         'ecole_id'
     ];
 
+    protected $dates = ['deleted_at'];
+
     public function ecole()
     {
         return $this->belongsTo(Ecole::class, 'ecole_id');
