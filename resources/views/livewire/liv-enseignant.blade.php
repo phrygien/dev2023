@@ -315,7 +315,7 @@
     <a href="{{ route('educations/enseignant', ['trashed_data' => 'trash']) }}"
     class="btn bg-primary/10 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
     >
-        {{ __('corbeille')}}
+        {{ __('corbeille data')}}
     </a>
     <button
         wire:click="create()"
