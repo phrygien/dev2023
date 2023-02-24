@@ -151,7 +151,7 @@ class LivEnseignant extends Component
     {
         Enseignant::withTrashed()->find($id)->restore();
         //return redirect()->back();
-        session()->flash('message', 'Eelement bien recuperé')
+        session()->flash('message', 'Eelement bien recuperé');
     }
 
     public function restoreAll()
