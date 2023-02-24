@@ -22,26 +22,38 @@ class LivEnseignant extends Component
     $telephone_urgenece, $grade, $religion, $goup_sang, $copie_cin, $copie_diplome,
     $ecole_id;
 
-    public $deletedData = false;
+    public $trashedData = false;
 
     public $readyToLoad = false;
+    public $readyToLoadTrasehData = false;
 
     public function loadEnseignants()
     {
         $this->readyToLoad = true;
     }
 
+    public function loadTrashedEnseignants()
+    {
+        $this->readyToLoadTrasehData = true;
+    }
+
     public function render(Request $request)
     {
+        $dataInTrash = Enseignant::onlyTrashed()->get();
         if($request->has('trashed_data'))
         {
-            $enseignants = Enseignant::onlyTrashed()->get();
+            $this->trashedData = true;
         }
+
         $enseignants = Enseignant::where('ecole_id', Auth::user()->ecole_id)->get();
 
         return view('livewire.liv-enseignant', [
             'enseignants' => $this->readyToLoad
             ? $enseignants
+            : [],
+
+            'trashedDatas' => $this->readyToLoadTrasehData
+            ? $dataInTrash
             : [],
         ]);
     }
@@ -138,7 +150,8 @@ class LivEnseignant extends Component
     public function restore($id)
     {
         Enseignant::withTrashed()->find($id)->restore();
-        return redirect()->back();
+        //return redirect()->back();
+        session()->flash('message', 'Eelement bien recuperé')
     }
 
     public function restoreAll()

@@ -313,18 +313,10 @@
     </a>
     @else
     <a href="{{ route('educations/enseignant', ['trashed_data' => 'trash']) }}"
-        class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
+    class="btn bg-primary/10 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
     >
         {{ __('View deleted data')}}
     </a>
-
-    <button
-        wire:click="restoreAll()"
-        class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
-    >
-        {{ __('Restore All')}}
-    </button>
-
     <button
         wire:click="create()"
         class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
@@ -333,51 +325,110 @@
     </button>
     @endif
     </div>
-    <div wire:init="loadEnseignants" class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
-
-    @foreach ($enseignants as $enseignant)
-    <div class="card">
-        <div class="p-2 text-right">
-            <div x-data="usePopper({ placement: 'bottom-end', offset: 4 })" @click.outside="if(isShowPopper) isShowPopper = false"
-                class="inline-flex">
-            </div>
+    @if($trashedData)
+    <div
+    class="text-base font-medium tracking-wide text-slate-700 line-clamp-1 dark:text-navy-100 mb-2"
+    >
+        <div
+        class="badge bg-info/10 text-info dark:bg-accent-light/15 dark:text-accent-light"
+        >
+            {{ count($trashedDatas)}} {{ __('elements')}}
         </div>
-        <div class="flex grow flex-col items-center px-4 pb-5 sm:px-5">
-            <div class="avatar h-20 w-20">
-                <img class="rounded-full "  src="{{ asset('storage/'.$enseignant->photo) }}" alt="avatar" />
-            </div>
-            <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-                {{ $enseignant->nom }}
-            </h3>
-            <p class="text-xs+">Tél: {{ $enseignant->telephone_urgenece }}</p>
-            <div class="inline-space mt-3 flex grow flex-wrap items-start">
-                <a href="#"
-                    class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                    PHP
-                </a>
-                <a href="#"
-                    class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                    Nodejs
-                </a>
-                <a href="#"
-                    class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
-                    ReactJS
-                </a>
-            </div>
-            <div class="mt-6 grid w-full grid-cols-2 gap-2">
-                <button wire:click="edit({{ $enseignant->id }})"
-                class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
-
-                    <span>{{ __('editer')}}</span>
-                </button>
-                <button wire:click="delete({{ $enseignant->id }})"
-                class="btn bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25">
-                    <span> {{ __('supprimer')}} </span>
-                </button>
-            </div>
-        </div>
+        @if(count($trashedDatas) > 0)
+        <button
+        wire:click="restoreAll()"
+        class="btn font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
+        >
+            {{ __('recuperer tous')}}
+        </button>
+        @endif
     </div>
-    @endforeach
+    <div wire:init="loadTrashedEnseignants" class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
+
+        @foreach ($trashedDatas as $enseignant)
+        <div class="card">
+            <div class="p-2 text-right">
+                <div x-data="usePopper({ placement: 'bottom-end', offset: 4 })" @click.outside="if(isShowPopper) isShowPopper = false"
+                    class="inline-flex">
+                </div>
+            </div>
+            <div class="flex grow flex-col items-center px-4 pb-5 sm:px-5">
+                <div class="avatar h-20 w-20">
+                    <img class="rounded-full "  src="{{ asset('storage/'.$enseignant->photo) }}" alt="avatar" />
+                </div>
+                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
+                    {{ $enseignant->nom }}
+                </h3>
+                <p class="text-xs+">Tél: {{ $enseignant->telephone_urgenece }}</p>
+                <div class="inline-space mt-3 flex grow flex-wrap items-start">
+                    <a href="#"
+                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                        PHP
+                    </a>
+                    <a href="#"
+                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                        Nodejs
+                    </a>
+                    <a href="#"
+                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                        ReactJS
+                    </a>
+                </div>
+                <div class="mt-6 grid w-full grid-cols-2 gap-2">
+                    <button wire:click="restore({{ $enseignant->id }})"
+                    class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
+                        <span> {{ __('recuperer')}} </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    @else
+    <div wire:init="loadEnseignants" class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
+        @foreach ($enseignants as $enseignant)
+        <div class="card">
+            <div class="p-2 text-right">
+                <div x-data="usePopper({ placement: 'bottom-end', offset: 4 })" @click.outside="if(isShowPopper) isShowPopper = false"
+                    class="inline-flex">
+                </div>
+            </div>
+            <div class="flex grow flex-col items-center px-4 pb-5 sm:px-5">
+                <div class="avatar h-20 w-20">
+                    <img class="rounded-full "  src="{{ asset('storage/'.$enseignant->photo) }}" alt="avatar" />
+                </div>
+                <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
+                    {{ $enseignant->nom }}
+                </h3>
+                <p class="text-xs+">Tél: {{ $enseignant->telephone_urgenece }}</p>
+                <div class="inline-space mt-3 flex grow flex-wrap items-start">
+                    <a href="#"
+                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                        PHP
+                    </a>
+                    <a href="#"
+                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                        Nodejs
+                    </a>
+                    <a href="#"
+                        class="tag rounded-full bg-info/10 text-info hover:bg-info/20 focus:bg-success/20 active:bg-success/25">
+                        ReactJS
+                    </a>
+                </div>
+                <div class="mt-6 grid w-full grid-cols-2 gap-2">
+                    <button wire:click="edit({{ $enseignant->id }})"
+                    class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25">
+
+                        <span>{{ __('editer')}}</span>
+                    </button>
+                    <button wire:click="delete({{ $enseignant->id }})"
+                    class="btn bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25">
+                        <span> {{ __('supprimer')}} </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        @endforeach
+    @endif
     </div>
     @endif
 </main>
