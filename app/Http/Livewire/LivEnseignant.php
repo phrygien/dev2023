@@ -138,9 +138,60 @@ class LivEnseignant extends Component
         $this->updateMode = true;
         $objectEnseignant = Enseignant::findOrFail($id);
         $this->nom = $objectEnseignant->nom;
+        $this->prenom = $objectEnseignant->prenom;
+        $this->date_naissance = $objectEnseignant->date_naissance;
+        $this->lieu_naissance = $objectEnseignant->lieu_naissance;
+        $this->nationalite = $objectEnseignant->nationalite;
+        $this->cin = $objectEnseignant->cin;
+        $this->genre = $objectEnseignant->genre;
+        $this->civilite = $objectEnseignant->civilite;
+        $this->ville = $objectEnseignant->ville;
+        $this->adresse = $objectEnseignant->adresse;
+        $this->telephone = $objectEnseignant->telephone;
+        $this->email = $objectEnseignant->email;
+        $this->telephone_urgenece = $objectEnseignant->telephone_urgenece;
+        $this->grade = $objectEnseignant->grade;
+        $this->religion = $objectEnseignant->religion;
+        $this->goup_sang = $objectEnseignant->goup_sang;
         $this->photo = $objectEnseignant->photo;
         $this->copie_cin = $objectEnseignant->copie_cin;
         $this->copie_diplome = $objectEnseignant->copie_diplome;
+    }
+
+    public function update()
+    {
+        $validatedData = $this->validate([
+            'nom' => 'required',
+            'prenom' => 'nullable',
+            'nationalite' => 'required',
+            'date_naissance' => 'required|date',
+            'lieu_naissance' => 'required',
+            'cin' => 'required',
+            'photo' => 'nullable',
+            'genre' => 'required',
+            'civilite' => 'required',
+            'ville' => 'required',
+            'adresse' => 'required',
+            'telephone' => 'required|unique:enseignants',
+            'email' => 'required|unique:enseignants',
+            'telephone_urgenece' => 'required|unique:enseignants',
+            'grade' => 'nullable',
+            'religion' => 'nullable',
+            'goup_sang' => 'nullable',
+            'copie_cin' => 'required',
+            'copie_diplome' => 'nullable',
+            'ecole_id' => 'nullable'
+        ]);
+
+        $enseignants = Enseignant::findOrFail($this->enseignant_id);
+        $photo = $this->photo->store("images/enseigant_photos", 'public');
+        $copie_cin = $this->copie_cin->store('images/copies_cin', 'public');
+        $copie_diplome = $this->copie_diplome->store('images/copies_diplome', 'public');
+
+        $enseignants->update();
+
+        session()->flash('message', 'Modification bien enregistre');
+        $this->resetInputFields();
     }
 
     public function cancelEdit()
