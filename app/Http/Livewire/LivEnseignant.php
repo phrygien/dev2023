@@ -184,9 +184,9 @@ class LivEnseignant extends Component
             'ecole_id' => 'nullable'
         ]);
 
-        //var_dump($validatedData);die();
+        
         $enseignants = Enseignant::findOrFail($this->enseignant_id);
-        $photo = $this->photo->store("images/enseigant_photos", 'public');
+        $photo = $this->photo->store('images/enseigant_photos', 'public');
         $copie_cin = $this->copie_cin->store('images/copies_cin', 'public');
         $copie_diplome = $this->copie_diplome->store('images/copies_diplome', 'public');
 
