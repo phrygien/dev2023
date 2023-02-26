@@ -219,6 +219,7 @@ class LivEnseignant extends Component
     {
         $this->updateMode = false;
         $this->resetValidation();
+        $this->resetInputFields();
     }
 
     public function delete($id)

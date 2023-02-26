@@ -87,7 +87,7 @@
                                 </label>
                                 <label class="block">
                                     <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Date naissance')}}</span>
-                                    <input wire:model="date_naissance"
+                                    <input x-init="$el._x_flatpickr = flatpickr($el)" wire:model="date_naissance"
                                         class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="" type="text" />
                                         @error('date_naissance') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
