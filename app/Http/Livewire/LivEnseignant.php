@@ -184,15 +184,29 @@ class LivEnseignant extends Component
             'ecole_id' => 'nullable'
         ]);
 
-        
+        //var_dump($validatedData['photo']);die();
         $enseignants = Enseignant::findOrFail($this->enseignant_id);
+        if(substr($validatedData['photo'], 0,6) == 'images'){
+            $validatedData['photo'] = $validatedData['photo'];
+        }else{
         $photo = $this->photo->store('images/enseigant_photos', 'public');
-        $copie_cin = $this->copie_cin->store('images/copies_cin', 'public');
-        $copie_diplome = $this->copie_diplome->store('images/copies_diplome', 'public');
-
         $validatedData['photo'] = $photo;
-        $validatedData['copie_cin'] = $copie_cin;
-        $validatedData['copie_diplome'] = $copie_diplome;
+        }
+
+        if(substr($validatedData['copie_cin'],0,6) == 'images'){
+            $validatedData['copie_cin'] = $validatedData['copie_cin'];
+         }else{
+            $copie_cin = $this->copie_cin->store('images/copies_cin', 'public');
+            $validatedData['copie_cin'] = $copie_cin;
+        }
+
+        if(substr($validatedData['copie_diplome'],0,6) == 'images'){
+            $validatedData['copie_diplome'] = $validatedData['copie_diplome'];
+        }else{
+            $copie_diplome = $this->copie_diplome->store('images/copies_diplome', 'public');
+            $validatedData['copie_diplome'] = $copie_diplome;
+        }
+
         $validatedData['ecole_id'] = Auth::user()->ecole_id;
 
         $enseignants->update($validatedData);
