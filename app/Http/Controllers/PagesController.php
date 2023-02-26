@@ -666,4 +666,9 @@ class PagesController extends Controller
     {
         return view('enseignants/page');
     }
+
+    public function niveauxPage()
+    {
+        return view('niveaus/page');
+    }
 }

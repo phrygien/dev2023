@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('anneescolaires', function (Blueprint $table) {
+        Schema::create('niveaux', function (Blueprint $table) {
             $table->id();
-            $table->string('annee_name');
-            $table->date('date_debut');
-            $table->date('date_fin');
-            $table->integer('statut')->default(0);
+            $table->string('libelle');
+            $table->string('code');
+            $table->unsignedBigInteger('cycle_id');
             $table->unsignedBigInteger('ecole_id');
-            //$table->foreign('ecole_id')->references('id')->on('ecoles');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anneescolaires');
+        Schema::dropIfExists('niveaux');
     }
 };

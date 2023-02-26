@@ -733,8 +733,8 @@ class SidebarPanel
                         'route_name' => 'educations/enseignant'
                     ],
                     'components_popover' => [
-                        'title' => 'Popover',
-                        'route_name' => 'components/popover'
+                        'title' => 'Classes',
+                        'route_name' => 'educations/niveau'
                     ],
                     'components_modal' => [
                         'title' => 'Modal',
