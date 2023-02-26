@@ -32,6 +32,7 @@
                     {{ __('annuler')}}
                 </button>
                 <form wire:submit.prevent="update" enctype="multipart/form-data">
+                <input type="hidden" wire:model="enseignant_id">
                 <div wire:loading>
                 <button
                     class="btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
@@ -39,7 +40,7 @@
                 </button>
                 </div>
                 <div wire:loading.remove>
-                <button
+                <button wire:submit.prevent="update"
                     class="btn min-w-[7rem] bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
                     {{ __('enregistrer')}}
                 </button>

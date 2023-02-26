@@ -137,6 +137,7 @@ class LivEnseignant extends Component
     {
         $this->updateMode = true;
         $objectEnseignant = Enseignant::findOrFail($id);
+        $this->enseignant_id = $id;
         $this->nom = $objectEnseignant->nom;
         $this->prenom = $objectEnseignant->prenom;
         $this->date_naissance = $objectEnseignant->date_naissance;
@@ -172,9 +173,9 @@ class LivEnseignant extends Component
             'civilite' => 'required',
             'ville' => 'required',
             'adresse' => 'required',
-            'telephone' => 'required|unique:enseignants', $this->enseignant_id,
-            'email' => 'required|unique:enseignants,' .$this->enseignant_id,
-            'telephone_urgenece' => 'required|unique:enseignants,' .$this->enseignant_id,
+            'telephone' => 'required|unique:enseignants,telephone,' .$this->enseignant_id,
+            'email' => 'required|unique:enseignants,email,' .$this->enseignant_id,
+            'telephone_urgenece' => 'required|unique:enseignants,telephone_urgenece,' .$this->enseignant_id,
             'grade' => 'nullable',
             'religion' => 'nullable',
             'goup_sang' => 'nullable',
@@ -183,6 +184,7 @@ class LivEnseignant extends Component
             'ecole_id' => 'nullable'
         ]);
 
+        //var_dump($validatedData);die();
         $enseignants = Enseignant::findOrFail($this->enseignant_id);
         $photo = $this->photo->store("images/enseigant_photos", 'public');
         $copie_cin = $this->copie_cin->store('images/copies_cin', 'public');
@@ -192,7 +194,7 @@ class LivEnseignant extends Component
         $validatedData['copie_cin'] = $copie_cin;
         $validatedData['copie_diplome'] = $copie_diplome;
         $validatedData['ecole_id'] = Auth::user()->ecole_id;
-        
+
         $enseignants->update($validatedData);
 
         session()->flash('message', 'Modification bien enregistre');
