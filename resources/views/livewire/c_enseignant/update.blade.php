@@ -107,7 +107,7 @@
                                         />
                                         <div class="flex items-center space-x-2">
                                         <i class="fa-solid fa-cloud-arrow-up text-base"></i>
-                                        <span>{{ __('Photo')}}</span>
+                                        <span>{{ __('Modifier photo')}}</span>
                                         </div>
                                     </label>
                                     <div class="flex flex-col">
@@ -268,7 +268,7 @@
                     />
                     <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-cloud-arrow-up text-base"></i>
-                    <span>{{ __('Copie CIN')}}</span>
+                    <span>{{ __('Modifier copie CIN')}}</span>
                     </div>
                 </label>
                 @error('copie_cin') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
@@ -311,7 +311,7 @@
                     />
                     <div class="flex items-center space-x-2">
                     <i class="fa-solid fa-cloud-arrow-up text-base"></i>
-                    <span>{{ __('Copie diplome')}}</span>
+                    <span>{{ __('Modifier copie diplome')}}</span>
                     </div>
                 </label>
                 @error('copie_diplome') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror

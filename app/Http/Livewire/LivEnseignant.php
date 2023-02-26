@@ -172,9 +172,9 @@ class LivEnseignant extends Component
             'civilite' => 'required',
             'ville' => 'required',
             'adresse' => 'required',
-            'telephone' => 'required|unique:enseignants',
-            'email' => 'required|unique:enseignants',
-            'telephone_urgenece' => 'required|unique:enseignants',
+            'telephone' => 'required|unique:enseignants', $this->enseignant_id,
+            'email' => 'required|unique:enseignants,' .$this->enseignant_id,
+            'telephone_urgenece' => 'required|unique:enseignants,' .$this->enseignant_id,
             'grade' => 'nullable',
             'religion' => 'nullable',
             'goup_sang' => 'nullable',
@@ -188,7 +188,12 @@ class LivEnseignant extends Component
         $copie_cin = $this->copie_cin->store('images/copies_cin', 'public');
         $copie_diplome = $this->copie_diplome->store('images/copies_diplome', 'public');
 
-        $enseignants->update();
+        $validatedData['photo'] = $photo;
+        $validatedData['copie_cin'] = $copie_cin;
+        $validatedData['copie_diplome'] = $copie_diplome;
+        $validatedData['ecole_id'] = Auth::user()->ecole_id;
+        
+        $enseignants->update($validatedData);
 
         session()->flash('message', 'Modification bien enregistre');
         $this->resetInputFields();
