@@ -266,7 +266,7 @@
         </div>
         <div class="card mt-3">
             <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
-            <table class="is-hoverable w-full text-left">
+            <table class="is-hoverable w-full text-left" wire:init="loadNiveaus">
                 <thead>
                 <tr>
                     <th
@@ -299,7 +299,7 @@
                 </thead>
                 <tbody>
 
-
+                @foreach($niveaus as $niv)
                 <tr
                     class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
                 >
@@ -327,7 +327,7 @@
                     03 Sep
                     </td>
                 </tr>
-
+                @endforeach
 
                 </tbody>
             </table>

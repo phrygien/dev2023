@@ -47,4 +47,20 @@ class LivNiveau extends Component
     {
         $this->createMode = false;
     }
+
+    public function store()
+    {
+        $validatedData = $this->validate([
+            'libelle',
+            'code',
+            'cycle_id',
+            'ecole_id'
+        ]);
+
+        $validatedData['ecole_id'] = Auth::user()->ecole_id;
+        Niveau::create($validatedData);
+        session()->flash('message', 'Donnée bien enregistré');
+        $this->resetInputFields();
+        $this->resetValidation();
+    }
 }
