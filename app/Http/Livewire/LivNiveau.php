@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Cycle;
 use App\Models\Niveau;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class LivNiveau extends Component
@@ -21,12 +23,20 @@ class LivNiveau extends Component
 
     public function render()
     {
-        $niveaus = Niveau::where('ecole_id', Auth::user()->ecole_id)->get();
+        //$niveaus = Niveau::where('ecole_id', Auth::user()->ecole_id)->get();
+        $niveaus = DB::table('niveaux')
+                    ->join('cycles', 'cycles.id', '=', 'niveaux.cycle_id')
+                    ->select('niveaux.*','cycles.cycle_name')
+                    ->where('niveaux.ecole_id','=', Auth::user()->ecole_id)
+                    ->get();
+
+        $cycles = Cycle::where('ecole_id', Auth::user()->ecole_id)->get();
 
         return view('livewire.liv-niveau', [
             'niveaus' => $this->readyToLoad
             ? $niveaus
             : [],
+            'cycles' => $cycles
         ]);
     }
 
@@ -51,15 +61,19 @@ class LivNiveau extends Component
     public function store()
     {
         $validatedData = $this->validate([
-            'libelle',
-            'code',
-            'cycle_id',
-            'ecole_id'
+            'libelle' => 'required',
+            'code' => 'required|max:4',
+            'cycle_id' => 'nullable',
+            'ecole_id' => 'nullable'
         ]);
 
         $validatedData['ecole_id'] = Auth::user()->ecole_id;
         Niveau::create($validatedData);
-        session()->flash('message', 'Donnée bien enregistré');
+        //session()->flash('message', 'Donnée bien enregistré');
+        toast()
+        ->success('Donée bien enregistré!', 'Succée')
+        ->push();
+
         $this->resetInputFields();
         $this->resetValidation();
     }

@@ -303,28 +303,30 @@
                 <tr
                     class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
                 >
-                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">1</td>
+                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $niv->id }}</td>
                     <td
                     class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5"
                     >
-                    Web Application
+                    {{ $niv->libelle }}
                     </td>
                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                    John Doe
+                    {{ $niv->code }}
                     </td>
 
                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                    <div
-                        x-tooltip.primary="'42% Completed'"
-                        class="progress h-2 bg-slate-150 dark:bg-navy-500"
-                    >
-                        <div
-                        class="w-5/12 rounded-full bg-primary dark:bg-accent"
-                        ></div>
-                    </div>
+                        {{ $niv->cycle_name }}
                     </td>
                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                    03 Sep
+                    <button wire:click="edit({{ $niv->id }} )"
+                        class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25"
+                    >
+                        {{ __('editer')}}
+                    </button>
+                    <button wire:click="delete({{ $niv->id }})"
+                    class="btn bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
+                    >
+                        {{ __('supprimer')}}
+                    </button>
                     </td>
                 </tr>
                 @endforeach
