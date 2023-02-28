@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c214f70e6cbade51b5966a3ca20a931c",
+    "content-hash": "bb0157281c603da58ebe7c1cea5e89d6",
     "packages": [
         {
             "name": "brick/math",
@@ -3663,6 +3663,66 @@
             "time": "2023-02-07T16:14:23+00:00"
         },
         {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.14.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df",
+                "reference": "b477dd2f89d0751f0e51ffb3a70181f0bc7ab8df",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^9.28|^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.5",
+                "orchestra/testbench": "^7.7|^8.0",
+                "pestphp/pest": "^1.22",
+                "phpunit/phpunit": "^9.5.24",
+                "spatie/pest-plugin-test-time": "^1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelPackageTools\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Tools for creating Laravel packages",
+            "homepage": "https://github.com/spatie/laravel-package-tools",
+            "keywords": [
+                "laravel-package-tools",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/laravel-package-tools/issues",
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.14.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-27T15:33:45+00:00"
+        },
+        {
             "name": "spatie/laravel-permission",
             "version": "5.9.1",
             "source": {
@@ -5991,6 +6051,96 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.6"
             },
             "time": "2023-01-03T09:29:04+00:00"
+        },
+        {
+            "name": "usernotnull/tall-toasts",
+            "version": "v1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/usernotnull/tall-toasts.git",
+                "reference": "ffd14df224c648c24be6b128155bcff929c91dcf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/usernotnull/tall-toasts/zipball/ffd14df224c648c24be6b128155bcff929c91dcf",
+                "reference": "ffd14df224c648c24be6b128155bcff929c91dcf",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^8.15 || 9.0 - 9.34 || ^9.36 || ^10.0",
+                "livewire/livewire": "^v2.11",
+                "php": "^8.0|^8.1",
+                "spatie/laravel-package-tools": "^1.14"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^v3.14",
+                "laravel/pint": "^1.5",
+                "nunomaduro/collision": "^5.11.0|^6.3.0|^7.0",
+                "nunomaduro/larastan": "^2.4",
+                "orchestra/testbench": "^8.0",
+                "pestphp/pest": "^v1.22",
+                "pestphp/pest-plugin-laravel": "^v1.4",
+                "pestphp/pest-plugin-parallel": "^1.2",
+                "phpmd/phpmd": "^2.13",
+                "squizlabs/php_codesniffer": "^3.7",
+                "vimeo/psalm": "^4.30|^5.6"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Usernotnull\\Toast\\ToastServiceProvider"
+                    ],
+                    "aliases": {
+                        "Toast": "ToastManager"
+                    }
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Usernotnull\\Toast\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John F (@usernotnull)",
+                    "email": "15612814+usernotnull@users.noreply.github.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Toast notification library for the Laravel TALL stack. You can push notifications from the backend or frontend to render customizable toasts with almost zero footprint on the published CSS/JS!",
+            "homepage": "https://github.com/usernotnull/tall-toasts",
+            "keywords": [
+                "ToastManager",
+                "alpinejs",
+                "laravel",
+                "laravel-package",
+                "livewire",
+                "tailwindcss",
+                "tall-stack",
+                "tall-toasts",
+                "toast-notifications",
+                "ui-components",
+                "usernotnull"
+            ],
+            "support": {
+                "issues": "https://github.com/usernotnull/tall-toasts/issues",
+                "source": "https://github.com/usernotnull/tall-toasts/tree/v1.6.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/usernotnull",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-02-16T20:43:22+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

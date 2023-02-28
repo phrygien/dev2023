@@ -6,9 +6,11 @@ use App\Models\Anneescolaire;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class LivAnneescolaire extends Component
 {
+    use WireToast;
     public $annee_scolaire_id, $annee_name, $date_debut, $date_fin, $ecole_id, $status;
     public $updateMode = false;
     public $createMode = false;
@@ -132,9 +134,15 @@ class LivAnneescolaire extends Component
             $anneeObject->statut = 1;
             $anneeObject->save();
 
-            session()->flash('message', 'Ouverture avec succée.');
+            toast()
+            ->success('Annéé scolaire ouvert!', 'Succée')
+            ->push();
+            //session()->flash('message', 'Ouverture avec succée.');
         }else{
-            session()->flash('errors', 'Erreur, Un autre année déjà ouvert.');
+            //session()->flash('errors', 'Erreur, Un autre année déjà ouvert.');
+            toast()
+            ->danger('Un autre année déjà ouvert!', 'Erreur')
+            ->push();
         }
     }
 

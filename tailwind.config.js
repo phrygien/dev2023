@@ -42,6 +42,8 @@ module.exports = {
     "./src/**/*.{php,html,js,jsx,ts,tsx,vue}",
     "./resources/**/*.{php,html,js,jsx,ts,tsx,vue}",
     "./storage/framework/views/*.php",
+    './vendor/usernotnull/tall-toasts/config/**/*.php',
+    './vendor/usernotnull/tall-toasts/resources/views/**/*.blade.php',
   ],
   mode: "jit",
   darkMode: "class",

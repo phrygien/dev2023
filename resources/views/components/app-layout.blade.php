@@ -14,7 +14,7 @@
             - {{ $title }}
         @endisset
     </title>
-
+    @toastScripts
     <!-- CSS & JS Assets -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -40,7 +40,7 @@
 
 <body x-data x-bind="$store.global.documentBody"
     class="@isset($isSidebarOpen) {{ $isSidebarOpen === 'true' ? 'is-sidebar-open' : '' }} @endisset @isset($isHeaderBlur) {{ $isHeaderBlur === 'true' ? 'is-header-blur' : '' }} @endisset @isset($hasMinSidebar) {{ $hasMinSidebar === 'true' ? 'has-min-sidebar' : '' }} @endisset  @isset($headerSticky) {{ $headerSticky === 'false' ? 'is-header-not-sticky' : '' }} @endisset">
-
+    <livewire:toasts />
     <!-- App preloader-->
     <x-app-preloader></x-app-preloader>
 

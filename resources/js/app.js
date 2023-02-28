@@ -4,7 +4,7 @@ import Alpine from "alpinejs";
 import persist from "@alpinejs/persist"; // @see https://alpinejs.dev/plugins/persist
 import collapse from "@alpinejs/collapse"; // @see https://alpinejs.dev/plugins/collapse
 import intersect from "@alpinejs/intersect"; // @see https://alpinejs.dev/plugins/intersect
-
+import ToastComponent from '../../vendor/usernotnull/tall-toasts/resources/js/tall-toasts'
 // Third Party Libraries
 
 /*
@@ -125,3 +125,7 @@ Alpine.store("global", store);
 
 Alpine.data("usePopper", usePopper);
 Alpine.data("accordionItem", accordionItem);
+Alpine.data('ToastComponent', ToastComponent);
+
+//window.Alpine = Alpine
+//Alpine.start()
