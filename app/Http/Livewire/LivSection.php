@@ -83,7 +83,13 @@ class LivSection extends Component
 
     public function edit($id)
     {
-
+        $this->updateMode = true;
+        $section = Section::findOrFail($id);
+        $this->section_id = $section->id;
+        $this->section_name = $section->section_name;
+        $this->section_code = $section->section_code;
+        $this->niveau_id = $section->niveau_id;
+        $this->section_statut = $section->section_statut;
     }
 
     public function delete($id)
@@ -95,5 +101,28 @@ class LivSection extends Component
         ->success('Donnée bien supprimé!')
         ->push();
 
+    }
+
+    public function cancelEdit()
+    {
+        $this->updateMode = false;
+        $this->resetInputFields();
+        $this->resetValidation();
+    }
+
+
+    public function update()
+    {
+        $validatedData = $this->validate([
+            'section_name' => 'required',
+            'section_code' => 'required',
+            'niveau_id' => 'required',
+            'section_statut' => 'required',
+        ]);
+
+        if($this->section_id)
+        {
+            $section = Section::findOrFail($this->section_id);
+        }
     }
 }
