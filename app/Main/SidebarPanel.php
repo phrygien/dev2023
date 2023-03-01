@@ -737,8 +737,8 @@ class SidebarPanel
                         'route_name' => 'educations/niveau'
                     ],
                     'components_modal' => [
-                        'title' => 'Modal',
-                        'route_name' => 'components/modal'
+                        'title' => 'Section classe',
+                        'route_name' => 'educations/section'
                     ],
                     'components_drawer' => [
                         'title' => 'Drawer',

@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('etucations/cycle', [PagesController::class, 'cyclePage'])->name('educations/cycle');
     Route::get('educations/enseignant', [PagesController::class, 'enseignantPage'])->name('educations/enseignant');
     Route::get('educations/niveau', [PagesController::class, 'niveauxPage'])->name('educations/niveau');
+    Route::get('educations/section', [PagesController::class, 'sectionPage'])->name('educations/section');
 });
 
 Route::middleware('auth')->group(function () {

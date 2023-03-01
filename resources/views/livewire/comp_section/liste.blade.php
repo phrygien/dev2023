@@ -4,7 +4,7 @@
             <a
             class="text-primary transition-colors hover:text-primary-focus dark:text-accent-light dark:hover:text-accent"
             href="#"
-            >{{ __('Classe') }}</a
+            >{{ __('Section') }}</a
             >
             <svg
             x-ignore
@@ -266,29 +266,29 @@
         </div>
         <div class="card mt-3">
             <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
-            <table class="is-hoverable w-full text-left" wire:init="loadNiveaus">
+            <table class="is-hoverable w-full text-left" wire:init="loadSections">
                 <thead>
                 <tr>
                     <th
                     class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
                     >
-                    #
+                    {{ __('ID')}}
                     </th>
                     <th
                     class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
                     >
-                    {{ __('Nom classe') }}
+                    {{ __('Nom du section') }}
                     </th>
                     <th
                     class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
                     >
-                    {{ __('Code classe') }}
+                    {{ __('Code') }}
                     </th>
 
                     <th
                     class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
                     >
-                    {{ __('Cycle') }}
+                    {{ __('Classe') }}
                     </th>
                     <th width="220px"
                     class="whitespace-nowrap bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
@@ -299,30 +299,30 @@
                 </thead>
                 <tbody>
 
-                @foreach($niveaus as $niv)
+                @foreach($sections as $section)
                 <tr
                     class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
                 >
-                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $niv->id }}</td>
+                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $section->id }}</td>
                     <td
                     class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5"
                     >
-                    {{ $niv->libelle }}
+                    {{ $section->section_name }}
                     </td>
                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                    {{ $niv->code }}
+                    {{ $section->section_code }}
                     </td>
 
                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                        {{ $niv->cycle_name }}
+                        {{ $section->libelle }}
                     </td>
                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
-                    <button wire:click="edit({{ $niv->id }} )"
+                    <button wire:click="edit({{ $section->id }} )"
                         class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25"
                     >
                         {{ __('editer')}}
                     </button>
-                    <button wire:click="delete({{ $niv->id }})"
+                    <button wire:click="delete({{ $section->id }})"
                     class="btn bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
                     >
                         {{ __('supprimer')}}

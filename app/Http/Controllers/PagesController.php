@@ -671,4 +671,9 @@ class PagesController extends Controller
     {
         return view('niveaus/page');
     }
+
+    public function sectionPage()
+    {
+        return view('sections/page');
+    }
 }
