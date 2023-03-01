@@ -7,6 +7,7 @@ use App\Models\Section;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Usernotnull\Toast\Concerns\WireToast;
 
 class LivSection extends Component
@@ -15,6 +16,7 @@ class LivSection extends Component
     public $createMode = false;
     public $updateMode = false;
     use WireToast;
+    use WithPagination;
 
     public $section_id, $section_name, $section_code, $niveau_id, $section_statut;
 
@@ -31,11 +33,13 @@ class LivSection extends Component
                     ->where('niveaux.ecole_id','=', Auth::user()->ecole_id)
                     ->paginate(10);
 
+        //$objectSections = json_decode(json_encode($sections));
+
         $niveaus = Niveau::where('ecole_id', Auth::user()->ecole_id)->get();
         return view('livewire.liv-section', [
             'sections' => $this->readyToLoad
             ?$sections
-            : [],
+            : $sections,
             'niveaus' => $niveaus,
         ]);
     }
@@ -56,6 +60,7 @@ class LivSection extends Component
     public function cancelCreate()
     {
         $this->createMode = false;
+        $this->resetValidation();
     }
 
     public function store()
@@ -63,8 +68,8 @@ class LivSection extends Component
         $validatedData = $this->validate([
             'section_name' => 'required',
             'section_code' => 'required',
-            'niveau_id' => 'nullable',
-            'section_statut' => 'nullable'
+            'niveau_id' => 'required',
+            'section_statut' => 'required'
         ]);
 
         Section::create($validatedData);
