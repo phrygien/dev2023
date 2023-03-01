@@ -2,6 +2,7 @@
     @if($createMode)
     @include('livewire.comp_niveau.create')
     @elseif($updateMode)
+    @include('livewire.comp_niveau.update')
     @else
         @include('livewire.comp_niveau.liste')
     @endif
