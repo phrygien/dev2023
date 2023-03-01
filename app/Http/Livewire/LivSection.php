@@ -92,17 +92,6 @@ class LivSection extends Component
         $this->section_statut = $section->section_statut;
     }
 
-    public function delete($id)
-    {
-        $section = Section::findOrFail($id);
-        $section->delete($id);
-
-        toast()
-        ->success('Donnée bien supprimé!')
-        ->push();
-
-    }
-
     public function cancelEdit()
     {
         $this->updateMode = false;
@@ -140,4 +129,16 @@ class LivSection extends Component
             $this->resetValidation();
         }
     }
+
+    public function delete($id)
+    {
+        $section = Section::findOrFail($id);
+        $section->delete($id);
+
+        toast()
+        ->success('Donnée bien supprimé!')
+        ->push();
+
+    }
+
 }
