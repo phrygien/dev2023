@@ -123,6 +123,21 @@ class LivSection extends Component
         if($this->section_id)
         {
             $section = Section::findOrFail($this->section_id);
+            $section->update([
+                'section_name' => $this->section_name,
+                'section_code' => $this->section_code,
+                'niveau_id' => $this->niveau_id,
+                'section_statut' => $this->section_statut
+            ]);
+
+            $this->updateMode = false;
+
+            toast()
+            ->success('Modification bien enregistré!')
+            ->push();
+
+            $this->resetInputFields();
+            $this->resetValidation();
         }
     }
 }
