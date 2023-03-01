@@ -80,4 +80,20 @@ class LivSection extends Component
         $this->resetInputFields();
         $this->resetValidation();
     }
+
+    public function edit($id)
+    {
+
+    }
+
+    public function delete($id)
+    {
+        $section = Section::findOrFail($id);
+        $section->delete($id);
+
+        toast()
+        ->success('Donnée bien supprimé!')
+        ->push();
+
+    }
 }
