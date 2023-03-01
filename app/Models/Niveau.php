@@ -27,4 +27,9 @@ class Niveau extends Model
     {
         return $this->belongsTo(Ecole::class, 'ecole_id');
     }
+
+    public function sections()
+    {
+        return $this->hasMany(Section::class);
+    }
 }
