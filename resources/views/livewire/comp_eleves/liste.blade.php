@@ -93,18 +93,22 @@
         </div>
     </div>
 </div>
+
+
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
+    @foreach ($eleves as $eleve )
     <div class="card grow items-center p-4 sm:p-5">
         <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
+            <img class="rounded-full " src="{{ asset('storage/'.$eleve->photo) }}" alt="avatar" />
             <div
                 class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent">
             </div>
         </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Konnor Guzman
-        </h3>
-        <p class="text-xs+">Senior Developer</p>
+        <h3 class="pt-3 text-lg text-center font-medium text-slate-700 dark:text-navy-100">
+            {{ $eleve->nom_prenom }}
+        </h3><br>
+        <p class="text-xs+">Pére: {{ $eleve->nom_prenom_pere}}</p>
+        <p class="text-xs+">Mére: {{ $eleve->nom_prenom_mere}}</p>
         <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
         <div class="grow space-y-4">
             <div class="flex items-center space-x-4">
@@ -112,14 +116,14 @@
                     class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
                     <i class="fa fa-phone text-xs"></i>
                 </div>
-                <p>(01) 22 888 4444</p>
+                <p>{{ $eleve->telephone }}</p>
             </div>
             <div class="flex items-center space-x-4">
                 <div
                     class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
                     <i class="fa fa-envelope text-xs"></i>
                 </div>
-                <p>konnor@example.com</p>
+                <p>{{ $eleve->email }}</p>
             </div>
             <div class="flex items-center space-x-4">
                 <div
@@ -129,16 +133,365 @@
                 <p>www.konnor.com</p>
             </div>
         </div>
-        <button
+        <div x-data="{showModal:false}">
+        <button @click="showModal = true"
             class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
                 fill="currentColor">
                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
                     clip-rule="evenodd" />
             </svg>
-            <span> Profile </span>
+            <span> Voir </span>
         </button>
+        <template x-teleport="#x-teleport-target">
+        <div
+            class="fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden px-4 py-6 sm:px-5"
+            x-show="showModal"
+            role="dialog"
+            @keydown.window.escape="showModal = false"
+        >
+            <div
+            class="absolute inset-0 bg-slate-900/60 transition-opacity duration-300"
+            @click="showModal = false"
+            x-show="showModal"
+            x-transition:enter="ease-out"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="ease-in"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            ></div>
+            <div
+            class="relative w-full max-w-2xl origin-bottom rounded-lg bg-white pb-4 transition-all duration-300 dark:bg-navy-700"
+            x-show="showModal"
+            x-transition:enter="easy-out"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="easy-in"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-95"
+            >
+            <div
+                class="flex justify-between rounded-t-lg bg-slate-200 px-4 py-3 dark:bg-navy-800 sm:px-5"
+            >
+                <h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
+                {{ __('Eleve:')}} {{ $eleve->nom_prenom }}
+                </h3>
+                <button
+                @click="showModal = !showModal"
+                class="btn -mr-1.5 h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+                >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-4.5 w-4.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                >
+                    <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                </svg>
+                </button>
+            </div>
+            <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
+
+                <div class="items-center mb-2">
+                        <img class="h-64 w-64" src="{{ asset('storage/'.$eleve->photo) }}" alt="avatar" />
+                </div>
+
+                <table class="w-full text-left" hidden>
+                    <tbody>
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Nom et prenom')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->nom_prenom }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Appelation')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->appelation }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Date de naissance')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->date_naissance }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Lieu de naissance')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->lieu_naissance }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Age')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->age }} Ans</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Sexe')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->sexe }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('CIN')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->cin }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Nom du pére')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->nom_prenom_pere }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Nom de mére')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->nom_prenom_mere }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Fonction pére')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->fonction_pere }}</td>
+                        </tr>
+
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Fonction mére')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->fonction_mere }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Numéro télephone parent')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->telephone_parent }}</td>
+                        </tr>
+
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Email parent')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->email_parent }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Ville parent')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->ville_parent }}</td>
+                        </tr>
+
+                        <tr
+                        class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                        >
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Adresse de parent')}}</b></td>
+                        <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->adresse_parent }}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <div
+                    x-data="{expandedItem:null}"
+                    class="m-2 flex flex-col space-y-4 rounded-lg sm:space-y-5 lg:space-y-6"
+                >
+                    <div
+                    x-data="accordionItem('item-1')"
+                    class="rounded-lg border border-slate-150 dark:border-navy-500"
+                    >
+                    <div
+                        @click="expanded = !expanded"
+                        class="flex cursor-pointer items-center justify-between px-4 py-4 text-base font-medium text-slate-700 dark:text-navy-100 sm:px-5"
+                    >
+                        <p>{{ __('Details éleve')}}</p>
+                        <div
+                        :class="expanded && '-rotate-180'"
+                        class="text-sm font-normal leading-none text-slate-400 transition-transform duration-300 dark:text-navy-300"
+                        >
+                        <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div x-collapse x-show="expanded">
+                        <div class="px-4 pb-4 sm:px-5">
+                        <table class="w-full text-left">
+                            <tbody>
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Nom et prenom')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->nom_prenom }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Appelation')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->appelation }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Date de naissance')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->date_naissance }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Lieu de naissance')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->lieu_naissance }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Age')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->age }} Ans</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Sexe')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->sexe }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('CIN')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->cin }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    </div>
+                    <div
+                    x-data="accordionItem('item-2')"
+                    class="rounded-lg border border-slate-150 dark:border-navy-500"
+                    >
+                    <div
+                        @click="expanded = !expanded"
+                        class="flex cursor-pointer items-center justify-between px-4 py-4 text-base font-medium text-slate-700 dark:text-navy-100 sm:px-5"
+                    >
+                        <p>{{ __('Information sur les parent')}}</p>
+                        <div
+                        :class="expanded && '-rotate-180'"
+                        class="text-sm font-normal leading-none text-slate-400 transition-transform duration-300 dark:text-navy-300"
+                        >
+                        <i class="fas fa-chevron-down"></i>
+                        </div>
+                    </div>
+                    <div x-collapse x-show="expanded">
+                        <div class="px-4 pb-4 sm:px-5">
+                        <table class="w-full text-left">
+                            <tbody>
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Nom du pére')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->nom_prenom_pere }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Nom de mére')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->nom_prenom_mere }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Fonction pére')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->fonction_pere }}</td>
+                                </tr>
+
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Fonction mére')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->fonction_mere }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Numéro télephone parent')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->telephone_parent }}</td>
+                                </tr>
+
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Email parent')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->email_parent }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Ville parent')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->ville_parent }}</td>
+                                </tr>
+
+                                <tr
+                                class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
+                                >
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5"><b>{{ __('Adresse de parent')}}</b></td>
+                                <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $eleve->adresse_parent }}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <button
+                class="btn mt-4 border border-primary/30 bg-primary/10 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:border-accent-light/30 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
+                >
+                {{ __('desactiver')}}
+                </button>
+            </div>
+            </div>
+        </div>
+        </template>
     </div>
+    </div>
+    @endforeach
     <div class="card grow items-center p-4 sm:p-5">
         <div class="avatar h-20 w-20">
             <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
@@ -184,454 +537,5 @@
             <span> Profile </span>
         </button>
     </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-slate-300 dark:border-navy-700">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Alfredo Elliott
-        </h3>
-        <p class="text-xs+">React Developer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(374)-961-6674</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>alfredo@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.alfredo.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Derrick Simmons
-        </h3>
-        <p class="text-xs+">React Developer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(350)-813-3861</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>derrick@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.derrick-sims.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-slate-300 dark:border-navy-700">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Katrina West
-        </h3>
-        <p class="text-xs+">Android Developer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(052)-747-5542</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>katrina@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.katrina.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-slate-300 dark:border-navy-700">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Henry Curtis
-        </h3>
-        <p class="text-xs+">Laravel Developer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(675)-975-0083</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>henry@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.henry.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Raul Bradley
-        </h3>
-        <p class="text-xs+">Laravel Developer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(381)-627-2351</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>raul-brad@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.bradley.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-slate-300 dark:border-navy-700">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Samantha Shelton
-        </h3>
-        <p class="text-xs+">Backed Developer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(727)-810-3880</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>saman2@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.samantha.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-slate-300 dark:border-navy-700">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Corey Evans
-        </h3>
-        <p class="text-xs+">Frontend Developer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(723)-756-2206</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>corey@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.corey-evans.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-slate-300 dark:border-navy-700">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Lance Tucker
-        </h3>
-        <p class="text-xs+">NodeJs Developer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(040)-129-7702</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>lance@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.lance.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-slate-300 dark:border-navy-700">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Anthony Jensen
-        </h3>
-        <p class="text-xs+">Web Designer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(631)-475-8183</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>jensen@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.jensen.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
-    <div class="card grow items-center p-4 sm:p-5">
-        <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{asset('images/200x200.png')}}" alt="avatar" />
-            <div
-                class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent">
-            </div>
-        </div>
-        <h3 class="pt-3 text-lg font-medium text-slate-700 dark:text-navy-100">
-            Joe Perkins
-        </h3>
-        <p class="text-xs+">UI/UX Designer</p>
-        <div class="my-4 h-px w-full bg-slate-200 dark:bg-navy-500"></div>
-        <div class="grow space-y-4">
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-phone text-xs"></i>
-                </div>
-                <p>(832)-013-3691</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-envelope text-xs"></i>
-                </div>
-                <p>perkins@example.com</p>
-            </div>
-            <div class="flex items-center space-x-4">
-                <div
-                    class="flex h-7 w-7 items-center rounded-lg bg-primary/10 p-2 text-primary dark:bg-accent-light/10 dark:text-accent-light">
-                    <i class="fa fa-link text-xs"></i>
-                </div>
-                <p>www.joe-perkins.com</p>
-            </div>
-        </div>
-        <button
-            class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4.5 w-4.5" viewBox="0 0 20 20"
-                fill="currentColor">
-                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span> Profile </span>
-        </button>
-    </div>
+
 </div>
