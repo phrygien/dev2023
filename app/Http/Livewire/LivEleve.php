@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Eleve;
+use App\Models\ParentEleve;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
@@ -32,5 +35,88 @@ class LivEleve extends Component
         return view('livewire.liv-eleve', [
             'eleves' => $eleves
         ]);
+    }
+
+    public function resetInputFields()
+    {
+        $this->nom_prenom = '';
+        $this->appelation = '';
+        $this->date_naissance = '';
+        $this->lieu_naissance = '';
+        $this->telephone = '';
+        $this->age = '';
+        $this->sexe = '';
+        $this->photo = '';
+        $this->cin = '';
+        $this->acte_naissance = '';
+        $this->ville = '';
+        $this->adresse = '';
+        $this->nom_prenom_pere = '';
+        $this->nom_prenom_mere = '';
+        $this->fonction_pere = '';
+        $this->fonction_mere = '';
+        $this->ville_parent = '';
+        $this->adresse_parent = '';
+        $this->telephone_parent = '';
+        $this->email_parent = '';
+    }
+
+    public function create()
+    {
+        $this->createMode = true;
+    }
+
+    public function cancelCreate()
+    {
+        $this->createMode = false;
+        $this->resetInputFields();
+        $this->resetValidation();
+    }
+
+    public function store()
+    {
+        $validatedData = $this->validate([
+            'nom_prenom' => 'required',
+            'appelation' => 'required',
+            'date_naissance' => 'required|date',
+            'lieu_naissance' => 'nullable',
+            'age' => 'nullable',
+            'sexe' => 'required',
+            'photo' => 'required',
+            'cin' => 'nullable',
+            'acte_naissance' => 'nullable',
+            'parent_id' => 'nullable',
+            'ecole_id' => 'nullable',
+            'ville_id' => 'required',
+            'adresse' => 'required',
+            'telephone' => 'nullable',
+            'email' => 'nullable',
+            'religion' => 'nullable',
+            'group_sang' => 'nullable'
+        ]);
+
+        //create parent
+        $parent = new ParentEleve();
+        $parent->nom_prenom_pere = $validatedData['nom_prenom_pere'];
+        $parent->nom_prenom_mere = $validatedData['nom_prenom_mere'];
+        $parent->fonction_pere = $validatedData['fonction_pere'];
+        $parent->fonction_mere = $validatedData['fonction_mere'];
+        $parent->ville_parent = $validatedData['ville_parent'];
+        $parent->adresse_parent = $validatedData['adresse_parent'];
+        $parent->telephone_parent = $validatedData['telephone_parent'];
+        $parent->email_parent = $validatedData['email_parent'];
+        $parent->save();
+
+        //create eleve
+        $findCreatedParent = ParentEleve::where('email_parent', $validatedData['email_parent'])->where('telephone_parent', $validatedData['telephone_parent'])->first();
+
+        $validatedData['parent_id'] = $findCreatedParent->id;
+        $validatedData['ecole_id'] = Auth::user()->ecole_id;
+        $photoName = $this->photo->store("images/eleves_photo", 'public');
+        $acteNaissance = $this->acte_naissance->store("images/eleves_acte_naissances", 'public');
+
+        $validatedData['photo'] = $photoName;
+        $validatedData['acte_naissance'] = $acteNaissance;
+        Eleve::created($validatedData);
     }
 }
