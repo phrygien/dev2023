@@ -53,18 +53,18 @@
                         <div class="tab-content p-4 sm:p-5">
                             <div class="space-y-5">
                                 <label class="block">
-                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Nom')}}</span>
-                                    <input wire:model="nom"
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Nom et prénoms')}}</span>
+                                    <input wire:model="nom_prenom"
                                         class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="" type="text" />
-                                        @error('nom') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                        @error('nom_prenom') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
                                 </label>
                                 <label class="block">
-                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Prénoms')}}</span>
-                                    <input wire:model="prenom"
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Appelation')}}</span>
+                                    <input wire:model="appelation"
                                         class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="" type="text" />
-                                        @error('prenom') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                        @error('appelation') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
                                 </label>
                                 <label class="block">
                                     <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Nationalité')}}</span>
@@ -87,6 +87,33 @@
                                         placeholder="" type="text" />
                                         @error('lieu_naissance') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
                                 </label>
+
+                                <label
+                                    class="btn relative bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90"
+                                >
+                                    <input wire:model="acte_naissance"
+                                    tabindex="-1"
+                                    type="file"
+                                    class="pointer-events-none absolute inset-0 h-full w-full opacity-0"
+                                    />
+                                    <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-cloud-arrow-up text-base"></i>
+                                    <span>{{ __('Acte de naissance')}}</span>
+                                    </div>
+                                </label>
+                                <div wire:loading wire:target="photo">Uploading...</div>
+                                @error('acte_naissance') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+
+                                <br>
+
+                                <label class="block">
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Age')}}</span>
+                                    <input wire:model="age"
+                                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="" type="text" />
+                                        @error('age') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                </label>
+
                                 <label class="block">
                                     <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Numéro CIN')}}</span>
                                     <input wire:model="cin"
@@ -112,7 +139,7 @@
 
                                 <br>
                                 <label class="inline-flex items-center space-x-2">
-                                    <input wire:model="genre"
+                                    <input wire:model="sexe"
                                     class="form-radio is-basic h-5 w-5 rounded-full border-slate-400/70 bg-slate-100 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-500 dark:bg-navy-900 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
                                     type="radio" value="0"
                                     />
@@ -120,39 +147,31 @@
                                 </label>
 
                                 <label class="inline-flex items-center space-x-2">
-                                    <input wire:model="genre"
+                                    <input wire:model="sexe"
                                     class="form-radio is-basic h-5 w-5 rounded-full border-slate-400/70 bg-slate-100 checked:!border-success checked:!bg-success hover:!border-success focus:!border-success dark:border-navy-500 dark:bg-navy-900"
                                     type="radio" value="1"
                                     />
                                     <p>{{ __('Femme')}}</p>
                                 </label>
-                                @error('genre') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                @error('sexe') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
 
                                 <br>
                                 <label class="inline-flex items-center space-x-2">
-                                    <input wire:model="civilite"
+                                    <input wire:model="statut_eleve"
                                     class="form-radio is-basic h-5 w-5 rounded-full border-slate-400/70 bg-slate-100 checked:border-primary checked:bg-primary hover:border-primary focus:border-primary dark:border-navy-500 dark:bg-navy-900 dark:checked:border-accent dark:checked:bg-accent dark:hover:border-accent dark:focus:border-accent"
-                                    type="radio" value="0"
-                                    />
-                                    <p>{{ __('Mr')}}</p>
-                                </label>
-
-                                <label class="inline-flex items-center space-x-2">
-                                    <input wire:model="civilite"
-                                    class="form-radio is-basic h-5 w-5 rounded-full border-slate-400/70 bg-slate-100 checked:!border-success checked:!bg-success hover:!border-success focus:!border-success dark:border-navy-500 dark:bg-navy-900"
                                     type="radio" value="1"
                                     />
-                                    <p>{{ __('Mlle')}}</p>
+                                    <p>{{ __('Activé')}}</p>
                                 </label>
 
                                 <label class="inline-flex items-center space-x-2">
-                                    <input wire:model="civilite"
-                                        class="form-radio is-basic h-5 w-5 rounded-full border-slate-400/70 bg-slate-100 checked:border-secondary checked:bg-secondary hover:border-secondary focus:border-secondary dark:border-navy-500 dark:bg-navy-900 dark:checked:border-secondary-light dark:checked:bg-secondary-light dark:hover:border-secondary-light dark:focus:border-secondary-light"
-                                        type="radio" value="2"
-                                        />
-                                    <p>{{ __('Mme')}}</p>
+                                    <input wire:model="statut_eleve"
+                                    class="form-radio is-basic h-5 w-5 rounded-full border-slate-400/70 bg-slate-100 checked:!border-success checked:!bg-success hover:!border-success focus:!border-success dark:border-navy-500 dark:bg-navy-900"
+                                    type="radio" value="0"
+                                    />
+                                    <p>{{ __('Desactivé')}}</p>
                                 </label>
-                                @error('genre') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                @error('statut_eleve') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
 
                                 <label class="block">
                                     <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Ville')}}</span>
@@ -187,11 +206,19 @@
                                 </label>
 
                                 <label class="block">
-                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Télèphone urgence')}}</span>
-                                    <input wire:model="telephone_urgenece"
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Religion')}}</span>
+                                    <input wire:model="religion"
                                         class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
                                         placeholder="" type="text" />
-                                        @error('telephone_urgenece') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                        @error('religion') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
+                                </label>
+
+                                <label class="block">
+                                    <span class="font-medium text-slate-600 dark:text-navy-100">{{ __('Group sanguin')}}</span>
+                                    <input wire:model="group_sang"
+                                        class="form-input mt-1.5 w-full rounded-lg border border-slate-300 bg-transparent px-3 py-2 placeholder:text-slate-400/70 hover:border-slate-400 focus:border-primary dark:border-navy-450 dark:hover:border-navy-400 dark:focus:border-accent"
+                                        placeholder="" type="text" />
+                                        @error('group_sang') <p class="alert flex rounded-lg bg-error px-4 py-4 text-white sm:px-5">{{ $message }}</p> @enderror
                                 </label>
 
 

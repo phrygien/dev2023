@@ -29,6 +29,8 @@ class Eleve extends Model
         'email',
         'religion',
         'group_sang',
+        'nationalite',
+        'statut_eleve'
     ];
 
     public function parent()

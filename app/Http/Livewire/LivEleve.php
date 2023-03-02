@@ -19,8 +19,8 @@ class LivEleve extends Component
     use WithPagination;
 
     public $eleve_id, $nom_prenom, $appelation, $date_naissance, $lieu_naissance,
-    $age, $sexe, $photo, $cin, $acte_naissance, $parent_id, $ecoleid, $ville, $adresse,
-    $telephone, $email, $religion, $group_sang,
+    $age, $sexe, $photo, $cin, $acte_naissance, $parent_id, $ecole_id, $ville, $adresse,
+    $telephone, $email, $religion, $group_sang, $statut_eleve, $nationalite,
     $nom_prenom_pere, $nom_prenom_mere, $fonction_pere, $fonction_mere,
     $ville_parent, $adresse_parent, $telephone_parent, $email_parent;
 
@@ -59,6 +59,9 @@ class LivEleve extends Component
         $this->adresse_parent = '';
         $this->telephone_parent = '';
         $this->email_parent = '';
+        $this->nationalite = '';
+        $this->statut_eleve = '';
+        $this->group_sang = '';
     }
 
     public function create()
@@ -87,28 +90,30 @@ class LivEleve extends Component
             'acte_naissance' => 'nullable',
             'parent_id' => 'nullable',
             'ecole_id' => 'nullable',
-            'ville_id' => 'required',
+            'ville' => 'required',
             'adresse' => 'required',
             'telephone' => 'nullable',
             'email' => 'nullable',
             'religion' => 'nullable',
-            'group_sang' => 'nullable'
+            'group_sang' => 'nullable',
+            'nationalite' => 'nullable',
+            'statut_eleve' => 'required',
         ]);
-
+        //DB::beginTransaction();
         //create parent
         $parent = new ParentEleve();
-        $parent->nom_prenom_pere = $validatedData['nom_prenom_pere'];
-        $parent->nom_prenom_mere = $validatedData['nom_prenom_mere'];
-        $parent->fonction_pere = $validatedData['fonction_pere'];
-        $parent->fonction_mere = $validatedData['fonction_mere'];
-        $parent->ville_parent = $validatedData['ville_parent'];
-        $parent->adresse_parent = $validatedData['adresse_parent'];
-        $parent->telephone_parent = $validatedData['telephone_parent'];
-        $parent->email_parent = $validatedData['email_parent'];
+        $parent->nom_prenom_pere = $this->nom_prenom_pere;
+        $parent->nom_prenom_mere = $this->nom_prenom_mere;
+        $parent->fonction_pere = $this->fonction_pere;
+        $parent->fonction_mere = $this->fonction_mere;
+        $parent->ville_parent = $this->ville_parent;
+        $parent->adresse_parent = $this->adresse_parent;
+        $parent->telephone_parent = $this->telephone_parent;
+        $parent->email_parent = $this->email_parent;
         $parent->save();
 
         //create eleve
-        $findCreatedParent = ParentEleve::where('email_parent', $validatedData['email_parent'])->where('telephone_parent', $validatedData['telephone_parent'])->first();
+        $findCreatedParent = ParentEleve::where('email_parent', $this->email_parent)->where('telephone_parent', $this->telephone_parent)->first();
 
         $validatedData['parent_id'] = $findCreatedParent->id;
         $validatedData['ecole_id'] = Auth::user()->ecole_id;
@@ -117,6 +122,11 @@ class LivEleve extends Component
 
         $validatedData['photo'] = $photoName;
         $validatedData['acte_naissance'] = $acteNaissance;
-        Eleve::created($validatedData);
+        Eleve::create();
+        /*if(Eleve::created($validatedData)){
+        DB::commit();
+        }else{
+            DB::rollBack();
+        }*/
     }
 }
