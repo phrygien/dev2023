@@ -9,6 +9,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Usernotnull\Toast\Concerns\WireToast;
 
 class LivEleve extends Component
 {
@@ -17,6 +18,7 @@ class LivEleve extends Component
 
     use WithFileUploads;
     use WithPagination;
+    use WireToast;
 
     public $eleve_id, $nom_prenom, $appelation, $date_naissance, $lieu_naissance,
     $age, $sexe, $photo, $cin, $acte_naissance, $parent_id, $ecole_id, $ville, $adresse,
@@ -92,14 +94,16 @@ class LivEleve extends Component
             'ecole_id' => 'nullable',
             'ville' => 'required',
             'adresse' => 'required',
-            'telephone' => 'nullable',
-            'email' => 'nullable',
+            'telephone' => 'nullable|unique:eleves,telephone',
+            'email' => 'nullable|unique:eleves,email',
             'religion' => 'nullable',
             'group_sang' => 'nullable',
             'nationalite' => 'nullable',
             'statut_eleve' => 'required',
+            'telephone_parent' => 'required|unique:parents,telephone_parent',
+            'email_parent' => 'required|unique:parents,email_parent'
         ]);
-        //DB::beginTransaction();
+        DB::beginTransaction();
         //create parent
         $parent = new ParentEleve();
         $parent->nom_prenom_pere = $this->nom_prenom_pere;
@@ -122,11 +126,21 @@ class LivEleve extends Component
 
         $validatedData['photo'] = $photoName;
         $validatedData['acte_naissance'] = $acteNaissance;
-        Eleve::create();
-        /*if(Eleve::created($validatedData)){
+        //Eleve::create();
+        if(Eleve::create($validatedData)){
         DB::commit();
+        toast()
+        ->success('Donnée bien enregistré!')
+        ->push();
+        $this->resetInputFields();
+        $this->resetValidation();
+
         }else{
             DB::rollBack();
-        }*/
+            toast()
+            ->danger('Donnée non enregistré!')
+            ->push();
+
+        }
     }
 }
