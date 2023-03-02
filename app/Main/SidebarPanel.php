@@ -741,12 +741,12 @@ class SidebarPanel
                         'route_name' => 'educations/section'
                     ],
                     'components_drawer' => [
-                        'title' => 'Drawer',
-                        'route_name' => 'components/drawer'
+                        'title' => 'Eleves',
+                        'route_name' => 'educations/eleve'
                     ],
                     'components_steps' => [
-                        'title' => 'Steps',
-                        'route_name' => 'components/steps'
+                        'title' => 'Patent d\'éleve',
+                        'route_name' => 'educations/parent'
                     ],
                     'components_timeline' => [
                         'title' => 'Timeline',

@@ -676,4 +676,14 @@ class PagesController extends Controller
     {
         return view('sections/page');
     }
+
+    public function elevePage()
+    {
+        return view('eleves.page');
+    }
+
+    public function parentPage()
+    {
+        return view('parents.page');
+    }
 }

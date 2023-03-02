@@ -44,6 +44,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('educations/enseignant', [PagesController::class, 'enseignantPage'])->name('educations/enseignant');
     Route::get('educations/niveau', [PagesController::class, 'niveauxPage'])->name('educations/niveau');
     Route::get('educations/section', [PagesController::class, 'sectionPage'])->name('educations/section');
+    Route::get('educations/eleve', [PagesController::class, 'elevePage'])->name('educations/eleve');
+    Route::get('educations/parent', [PagesController::class, 'parentPage'])->name('educations/parent');
 });
 
 Route::middleware('auth')->group(function () {
