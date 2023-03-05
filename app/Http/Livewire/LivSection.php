@@ -19,14 +19,45 @@ class LivSection extends Component
     use WithPagination;
 
     public $section_id, $section_name, $section_code, $niveau_id, $section_statut;
-
+    public $selectedItems = [];
+    public $displayBtn = false;
+    public $countCheckItem = 0;
     public function loadSections()
     {
         $this->readyToLoad = true;
     }
 
+    public function mount()
+    {
+        foreach($this->selectedItems as $id)
+        {
+            $this->countCheckItem++;
+        }
+        if($this->countCheckItem > 0)
+        {
+            $this->displayBtn = true;
+        }else
+        {
+            $this->displayBtn = false;
+        }
+    }
+
     public function render()
     {
+        if($this->selectedItems){
+            //var_dump(sizeof($this->selectedItems));die();
+            foreach($this->selectedItems as $id)
+            {
+                $this->countCheckItem= sizeof($this->selectedItems);
+            }
+            if($this->countCheckItem > 0)
+            {
+                $this->displayBtn = true;
+            }else
+            {
+                $this->displayBtn = false;
+            }
+        }
         $sections = DB::table('sections')
                     ->join('niveaux', 'niveaux.id','=','sections.niveau_id')
                     ->select('sections.*','niveaux.libelle')
@@ -41,6 +72,7 @@ class LivSection extends Component
             ?$sections
             : $sections,
             'niveaus' => $niveaus,
+            'totalselected' => $this->countCheckItem,
         ]);
     }
 
@@ -140,5 +172,19 @@ class LivSection extends Component
         ->push();
 
     }
+
+    public function deleteSelectedData()
+    {
+        foreach ($this->selectedItems as $id)
+        {
+            Section::findOrFail($id)->delete();
+        }
+        $this->selectedItems = [];
+        $this->displayBtn = false;
+        toast()
+        ->success('Selected items deleted successfuly!')
+        ->push();
+    }
+
 
 }

@@ -15,6 +15,7 @@ class LivEleve extends Component
 {
     public $createMode = false;
     public $updateMode = false;
+    public $detailMode = false;
 
     use WithFileUploads;
     use WithPagination;
@@ -142,5 +143,15 @@ class LivEleve extends Component
             ->push();
 
         }
+    }
+
+    public function detail($id)
+    {
+        $this->detailMode = true;
+    }
+
+    public function desactiver($id)
+    {
+
     }
 }

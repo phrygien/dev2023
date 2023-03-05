@@ -97,9 +97,9 @@
 
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4">
     @foreach ($eleves as $eleve )
-    <div class="card grow items-center p-4 sm:p-5">
+    <div class="card grow items-center p-4 sm:p-5" wire:loading.lazy>
         <div class="avatar h-20 w-20">
-            <img class="rounded-full " src="{{ asset('storage/'.$eleve->photo) }}" alt="avatar" />
+            <img class="rounded-full " src="{{ asset('storage/'.$eleve->photo) }}" alt="avatar" wire:loading.lazy />
             <div
                 class="absolute right-0 m-1 h-4 w-4 rounded-full border-2 border-white bg-primary dark:border-navy-700 dark:bg-accent">
             </div>
@@ -133,6 +133,8 @@
                 <p>www.konnor.com</p>
             </div>
         </div>
+
+
         <div x-data="{showModal:false}">
         <button @click="showModal = true"
             class="btn mt-5 space-x-2 rounded-full bg-primary font-medium text-white hover:bg-primary-focus focus:bg-primary-focus active:bg-primary-focus/90 dark:bg-accent dark:hover:bg-accent-focus dark:focus:bg-accent-focus dark:active:bg-accent/90">
@@ -175,7 +177,7 @@
                 class="flex justify-between rounded-t-lg bg-slate-200 px-4 py-3 dark:bg-navy-800 sm:px-5"
             >
                 <h3 class="text-base font-medium text-slate-700 dark:text-navy-100">
-                {{ __('Eleve:')}} {{ $eleve->nom_prenom }}
+                {{ $eleve->nom_prenom }}
                 </h3>
                 <button
                 @click="showModal = !showModal"
@@ -199,8 +201,8 @@
             </div>
             <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
 
-                <div class="items-center mb-2">
-                        <img class="h-64 w-64" src="{{ asset('storage/'.$eleve->photo) }}" alt="avatar" />
+                <div class="text-center mb-2">
+                        <img class=""width="220px" src="{{ asset('storage/'.$eleve->photo) }}" alt="avatar" />
                 </div>
 
                 <table class="w-full text-left" hidden>
@@ -315,7 +317,7 @@
                     </tbody>
                 </table>
 
-                <div
+                <div hidden
                     x-data="{expandedItem:null}"
                     class="m-2 flex flex-col space-y-4 rounded-lg sm:space-y-5 lg:space-y-6"
                 >
@@ -477,14 +479,24 @@
                     </div>
                     </div>
                 </div>
-                </div>
-            </div>
-            <div class="text-center">
+                <div class="text-center">
                 <button
-                class="btn mt-4 border border-primary/30 bg-primary/10 font-medium text-primary hover:bg-primary/20 focus:bg-primary/20 active:bg-primary/25 dark:border-accent-light/30 dark:bg-accent-light/10 dark:text-accent-light dark:hover:bg-accent-light/20 dark:focus:bg-accent-light/20 dark:active:bg-accent-light/25"
+                    class="btn bg-info/10 font-medium text-info hover:bg-info/20 focus:bg-info/20 active:bg-info/25"
                 >
-                {{ __('desactiver')}}
+                    {{ __('desactiver')}}
                 </button>
+                <button
+                    class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25"
+                >
+                    {{ __('modifier')}}
+                </button>
+                <button
+                    class="btn bg-warning/10 font-medium text-warning hover:bg-warning/20 focus:bg-warning/20 active:bg-warning/25"
+                >
+                    {{ __('supprimer')}}
+                </button>
+                </div>
+                </div>
             </div>
             </div>
         </div>

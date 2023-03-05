@@ -31,7 +31,7 @@
         <div x-data="{isFilterExpanded:false}">
         <div class="flex items-center justify-between">
         <button wire:click="create()"
-            class="btn bg-secondary/10 font-medium text-secondary hover:bg-secondary/20 focus:bg-secondary/20 active:bg-secondary/25 dark:bg-secondary-light/10 dark:text-secondary-light dark:hover:bg-secondary-light/20 dark:focus:bg-secondary-light/20 dark:active:bg-secondary-light/25"
+        class="btn bg-secondary font-medium text-white hover:bg-secondary-focus focus:bg-secondary-focus active:bg-secondary-focus/90"
         >
             {{ __('creer') }}
         </button>
@@ -69,7 +69,7 @@
 
             <button
                 @click="isFilterExpanded = !isFilterExpanded"
-                class="btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+                class="mr-2 btn h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
             >
                 <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -85,6 +85,15 @@
                 />
                 </svg>
             </button>
+
+            @if($displayBtn)
+            <button wire:click="deleteSelectedData"
+            class="ml-2 btn bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90"
+            >
+                {{ __('supprimer ')}} {{ $countCheckItem}} {{ __('élement sellectionné')}}
+            </button>
+            @endif
+
             </div>
         </div>
         <div x-show="isFilterExpanded" x-collapse>
@@ -266,9 +275,14 @@
         </div>
         <div class="card mt-3">
             <div class="is-scrollbar-hidden min-w-full overflow-x-auto">
-            <table class="is-hoverable w-full text-left" wire:init="loadSections">
+            <table class="is-zebra w-full is-hoverable w-full text-left" wire:init="loadSections">
                 <thead>
                 <tr>
+                     <th
+                    class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
+                    >
+                    </th>
+
                     <th
                     class="whitespace-nowrap rounded-tl-lg bg-slate-200 px-4 py-3 font-semibold uppercase text-slate-800 dark:bg-navy-800 dark:text-navy-100 lg:px-5"
                     >
@@ -303,6 +317,9 @@
                 <tr
                     class="border-y border-transparent border-b-slate-200 dark:border-b-navy-500"
                 >
+                    <td class="whitespace-nowrap px-4 py-3 sm:px-5">
+                        <input type="checkbox" wire:model="selectedItems" value="{{ $section->id }}">
+                    </td>
                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">{{ $section->id }}</td>
                     <td
                     class="whitespace-nowrap px-4 py-3 font-medium text-slate-700 dark:text-navy-100 sm:px-5"
@@ -318,12 +335,12 @@
                     </td>
                     <td class="whitespace-nowrap px-4 py-3 sm:px-5">
                     <button wire:click="edit({{ $section->id }} )"
-                        class="btn bg-success/10 font-medium text-success hover:bg-success/20 focus:bg-success/20 active:bg-success/25"
+                    class="btn bg-success font-medium text-white hover:bg-success-focus focus:bg-success-focus active:bg-success-focus/90"
                     >
                         {{ __('editer')}}
                     </button>
                     <button wire:click="delete({{ $section->id }})"
-                    class="btn bg-error/10 font-medium text-error hover:bg-error/20 focus:bg-error/20 active:bg-error/25"
+                    class="btn bg-error font-medium text-white hover:bg-error-focus focus:bg-error-focus active:bg-error-focus/90"
                     >
                         {{ __('supprimer')}}
                     </button>
