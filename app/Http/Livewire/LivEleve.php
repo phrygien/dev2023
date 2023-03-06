@@ -2,7 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Anneescolaire;
+use App\Models\Ecole;
 use App\Models\Eleve;
+use App\Models\Inscription;
 use App\Models\ParentEleve;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -27,17 +30,36 @@ class LivEleve extends Component
     $nom_prenom_pere, $nom_prenom_mere, $fonction_pere, $fonction_mere,
     $ville_parent, $adresse_parent, $telephone_parent, $email_parent;
 
+    public $trashedData = false;
+
     public function render()
     {
+        if($this->trashedData == true)
+        {
+            $eleves = DB::table('eleves')
+            ->join('parents','parents.id', '=', 'eleves.parent_id')
+            ->join('ecoles', 'ecoles.id', '=', 'eleves.ecole_id')
+            ->select('eleves.*', 'parents.*', 'ecoles.ecole_name')
+            ->where('eleves.deleted_at', '!=', null)
+            ->paginate(10);
+        }else{
+
         $eleves = DB::table('eleves')
                     ->join('parents','parents.id', '=', 'eleves.parent_id')
                     ->join('ecoles', 'ecoles.id', '=', 'eleves.ecole_id')
                     ->select('eleves.*', 'parents.*', 'ecoles.ecole_name')
+                    ->where('eleves.deleted_at', '=', null)
                     ->paginate(10);
+        }
 
         return view('livewire.liv-eleve', [
             'eleves' => $eleves
         ]);
+    }
+
+    public function displayTrashedData()
+    {
+        $this->trashedData = true;
     }
 
     public function resetInputFields()
@@ -150,8 +172,65 @@ class LivEleve extends Component
         $this->detailMode = true;
     }
 
+    public function activer($id)
+    {
+        $eleve = Eleve::findOrFail($id);
+        $eleve->statut_eleve = 1;
+        $eleve->save();
+
+        toast()
+        ->success('Activation avec succée!')
+        ->push();
+    }
+
     public function desactiver($id)
     {
+        $eleve = Eleve::findOrFail($id);
+        $eleve->statut_eleve = 0;
+        $eleve->save();
+        toast()
+        ->success('Desactivation avec succée!')
+        ->push();
+    }
 
+    public function delete($id)
+    {
+
+        $anneeOuvert = Anneescolaire::where('ecole_id', Auth::user()->ecole_id)
+                        ->where('statut',1)
+                        ->first();
+
+        $inscrived = Inscription::where('eleve_id', $id)
+                    ->where('ecole_id', Auth::user()->ecole_id)
+                    ->where('annee_id', $anneeOuvert->annee_id)
+                    ->first();
+        if($inscrived ==null){
+            Eleve::find($id)->delete();
+            toast()
+            ->success('Suppression avec succée')
+            ->push();
+        }else{
+            toast()
+            ->warning('Eleve lié a une inscription')
+            ->push();
+        }
+    }
+
+    public function restore($id)
+    {
+        Eleve::withTrashed()->findOrFail($id)->restore();
+        toast()
+        ->success('Restauration avec succée')
+        ->push();
+        $this->trashedData = false;
+    }
+
+    public function restorAll()
+    {
+        Eleve::onlyTrashed()->restore();
+        toast()
+        ->success('Restauration avec succée')
+        ->push();
+        $this->trashedData = false;
     }
 }
